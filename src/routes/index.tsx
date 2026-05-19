@@ -13,6 +13,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Divider, Gunungan, CornerFloral } from "@/components/Ornament";
+import { SceneDecor } from "@/components/SceneDecor";
+import { OvalFrame } from "@/components/OvalFrame";
+import coupleHero from "@/assets/couple-hero.jpg";
+import gununganGold from "@/assets/gunungan-gold.png";
+import brideImg from "@/assets/bride.jpg";
+import groomImg from "@/assets/groom.jpg";
 
 export const Route = createFileRoute("/")({ component: InvitationPage });
 
@@ -72,43 +78,27 @@ function InvitationPage() {
 function Cover({ opened, onOpen }: { opened: boolean; onOpen: () => void }) {
   return (
     <section
-      className={`fixed inset-0 z-[60] flex items-center justify-center batik-bg transition-all duration-1000 ${
+      className={`fixed inset-0 z-[60] flex items-center justify-center overflow-hidden transition-all duration-1000 ${
         opened ? "opacity-0 pointer-events-none -translate-y-8" : "opacity-100"
       }`}
-      style={{
-        background:
-          "radial-gradient(ellipse at center, oklch(0.22 0.06 265) 0%, oklch(0.14 0.05 265) 100%)",
-      }}
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <CornerFloral className="absolute top-4 left-4 w-24 sm:w-36 text-gold/70" />
-        <CornerFloral className="absolute top-4 right-4 w-24 sm:w-36 text-gold/70" flip />
-        <CornerFloral className="absolute bottom-4 left-4 w-24 sm:w-36 text-gold/70" style={{ transform: "scaleY(-1)" }} />
-        <CornerFloral className="absolute bottom-4 right-4 w-24 sm:w-36 text-gold/70" style={{ transform: "scale(-1,-1)" }} />
-      </div>
-
-      <div className="ornament-frame relative mx-6 max-w-md w-full px-6 py-12 sm:py-16 text-center rounded-sm">
-        <p className="text-gold/80 tracking-[0.35em] text-[10px] sm:text-xs uppercase animate-[fade-up_1s_ease-out_both]">
-          The Wedding of
-        </p>
-        <Divider />
-        <h1 className="gold-text font-serif text-5xl sm:text-7xl leading-none animate-[fade-up_1.2s_ease-out_both]">
-          Baswara
-        </h1>
-        <p className="mt-3 text-ivory/80 text-sm font-light italic animate-[fade-up_1.4s_ease-out_both]">
-          A Wedding Invitation Experience
-        </p>
-        <Divider />
-        <p className="text-ivory/70 text-sm font-light">Kepada Yth. Bapak/Ibu/Saudara/i</p>
-        <p className="mt-1 font-serif text-2xl text-ivory">Tamu Undangan</p>
-
-        <button
-          onClick={onOpen}
-          className="group mt-10 inline-flex items-center gap-2 rounded-full border border-gold/60 bg-gold/10 px-7 py-3 text-ivory hover:bg-gold hover:text-navy transition-all duration-500"
-        >
-          <Heart size={16} className="group-hover:fill-current" />
-          <span className="tracking-widest text-xs uppercase">Open the Invitation</span>
-        </button>
+      <SceneDecor />
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-md w-full pt-20 sm:pt-10">
+        <div className="animate-[fade-up_1s_ease-out_both]">
+          <OvalFrame src={coupleHero} alt="Baswara &amp; Kirana" size="lg" />
+        </div>
+        <div className="mt-10 backdrop-blur-[2px] bg-ivory/55 rounded-md px-6 py-8 border border-gold/30 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] animate-[fade-up_1.3s_ease-out_both]">
+          <p className="text-navy/80 text-sm tracking-[0.2em]">We invite you to The Wedding of</p>
+          <h1 className="mt-3 font-serif text-5xl sm:text-6xl text-navy">Baswara &amp; Kirana</h1>
+          <p className="mt-2 text-navy/60 italic text-sm">A Wedding Invitation Experience</p>
+          <button
+            onClick={onOpen}
+            className="group mt-6 inline-flex items-center gap-2 rounded-full bg-navy text-ivory px-7 py-3 hover:bg-navy-deep transition-all duration-500 shadow-lg"
+          >
+            <span className="tracking-widest text-xs uppercase">Open the Invitation</span>
+            <Heart size={14} className="group-hover:fill-current" />
+          </button>
+        </div>
       </div>
     </section>
   );
@@ -119,14 +109,14 @@ function HeroSection() {
   const t = useCountdown(WEDDING_DATE);
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center section-pad overflow-hidden">
-      <div className="absolute inset-0 batik-bg pointer-events-none" />
-      <Gunungan className="absolute top-10 left-1/2 -translate-x-1/2 w-40 sm:w-56 opacity-70" />
-      <div className="relative max-w-2xl mx-auto text-center pt-40">
+      <SceneDecor />
+      <div className="relative z-10 max-w-2xl mx-auto text-center pt-32 sm:pt-40">
+        <img src={gununganGold} alt="" aria-hidden className="mx-auto w-20 sm:w-28 mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] animate-[float_6s_ease-in-out_infinite]" loading="lazy" />
         <p className="font-script text-gold text-3xl sm:text-4xl">Our Wedding Day</p>
-        <h2 className="mt-2 gold-text font-serif text-6xl sm:text-8xl">Baswara</h2>
-        <p className="mt-2 text-muted-foreground italic">& Kirana</p>
+        <h2 className="mt-2 font-serif text-6xl sm:text-8xl text-navy">Baswara</h2>
+        <p className="mt-2 text-navy/70 italic">&amp; Kirana</p>
         <Divider />
-        <p className="text-navy/80 font-serif text-xl">Saturday, 08 May 2027</p>
+        <p className="text-navy font-serif text-xl">Saturday, 08 May 2027</p>
 
         <div className="mt-10 grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto">
           {[
@@ -135,7 +125,7 @@ function HeroSection() {
             { v: t.minutes, l: "Min" },
             { v: t.seconds, l: "Sec" },
           ].map((b) => (
-            <div key={b.l} className="ornament-frame rounded-md py-4">
+            <div key={b.l} className="ornament-frame rounded-md py-4 bg-ivory/75 backdrop-blur-sm">
               <div className="text-2xl sm:text-4xl font-serif text-navy">{String(b.v).padStart(2, "0")}</div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">{b.l}</div>
             </div>
@@ -207,17 +197,10 @@ function CoupleSection() {
 }
 
 function ProfileCard({ name, parents, handle, initials }: { name: string; parents: string; handle: string; initials: string }) {
+  const isGroom = initials === "B";
   return (
     <div className="ornament-frame rounded-sm p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both]">
-      <div className="relative">
-        <div className="w-40 h-52 sm:w-44 sm:h-60 rounded-[50%] overflow-hidden border-2 border-gold/70 bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
-          <span className="font-serif text-7xl text-navy/40">{initials}</span>
-        </div>
-        <svg viewBox="0 0 120 30" className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 text-gold">
-          <path d="M5 15 Q30 0 60 15 Q90 30 115 15" fill="none" stroke="currentColor" strokeWidth="1" />
-          <circle cx="60" cy="15" r="2" fill="currentColor" />
-        </svg>
-      </div>
+      <OvalFrame src={isGroom ? groomImg : brideImg} alt={name} size="md" />
       <h3 className="mt-8 font-serif text-3xl text-navy">{name}</h3>
       <p className="mt-2 text-sm text-muted-foreground italic max-w-xs">{parents}</p>
       <a
