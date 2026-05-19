@@ -69,8 +69,7 @@ function InvitationPage() {
         loop
         preload="auto"
         playsInline
-        // @ts-expect-error - non-standard but widely supported on iOS
-        webkit-playsinline="true"
+        {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as Record<string, string>)}
         src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_31c1e5b1ef.mp3?filename=relaxing-mountains-rivers-streams-running-water-18178.mp3"
       />
       <Cover opened={opened} onOpen={handleOpen} />
