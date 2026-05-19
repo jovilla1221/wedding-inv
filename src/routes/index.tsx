@@ -30,20 +30,36 @@ function InvitationPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    if (opened && audioRef.current && !playing) {
-      audioRef.current.play().then(() => setPlaying(true)).catch(() => {});
-    }
-  }, [opened]);
-
-  useEffect(() => {
     document.body.style.overflow = opened ? "auto" : "hidden";
   }, [opened]);
+
+  const handleOpen = () => {
+    // Trigger audio in the same user-gesture tick (required on iOS/Android)
+    const a = audioRef.current;
+    if (a) {
+      a.muted = false;
+      a.volume = 0.8;
+      const p = a.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => setPlaying(true)).catch(() => setPlaying(false));
+      }
+    }
+    setOpened(true);
+  };
 
   const toggleMusic = () => {
     const a = audioRef.current;
     if (!a) return;
     if (playing) { a.pause(); setPlaying(false); }
-    else { a.play().then(() => setPlaying(true)).catch(() => toast.error("Tap once to enable audio")); }
+    else {
+      a.muted = false;
+      const p = a.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => setPlaying(true)).catch(() => toast.error("Ketuk sekali untuk mengaktifkan audio"));
+      } else {
+        setPlaying(true);
+      }
+    }
   };
 
   return (
@@ -51,11 +67,15 @@ function InvitationPage() {
       <audio
         ref={audioRef}
         loop
+        preload="auto"
+        playsInline
+        // @ts-expect-error - non-standard but widely supported on iOS
+        webkit-playsinline="true"
         src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_31c1e5b1ef.mp3?filename=relaxing-mountains-rivers-streams-running-water-18178.mp3"
       />
-      <Cover opened={opened} onOpen={() => setOpened(true)} />
+      <Cover opened={opened} onOpen={handleOpen} />
       {opened && (
-        <main className="animate-[fade-in_1.2s_ease-out_both]">
+        <main className="animate-[fade-in_1.4s_ease-out_both]">
           <HeroSection />
           <CoupleSection />
           <StorySection />
