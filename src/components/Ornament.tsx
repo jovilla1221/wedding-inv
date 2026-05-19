@@ -34,12 +34,20 @@ export function Gunungan({ className = "" }: { className?: string }) {
   );
 }
 
-export function CornerFloral({ className = "", flip = false }: { className?: string; flip?: boolean }) {
+export function CornerFloral({
+  className = "",
+  flip = false,
+  style,
+}: {
+  className?: string;
+  flip?: boolean;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       viewBox="0 0 120 120"
       className={className}
-      style={flip ? { transform: "scaleX(-1)" } : undefined}
+      style={style ?? (flip ? { transform: "scaleX(-1)" } : undefined)}
       aria-hidden
     >
       <g fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
