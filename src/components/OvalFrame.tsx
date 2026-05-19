@@ -12,10 +12,7 @@ export function OvalFrame({
   className?: string;
   size?: "md" | "lg";
 }) {
-  const dims =
-    size === "lg"
-      ? "w-64 h-80 sm:w-72 sm:h-[22rem]"
-      : "w-44 h-56 sm:w-52 sm:h-64";
+  const dims = size === "lg" ? "w-64 h-80 sm:w-72 sm:h-[22rem]" : "w-44 h-56 sm:w-52 sm:h-64";
   return (
     <div className={`relative inline-block ${className}`}>
       <div
@@ -24,9 +21,24 @@ export function OvalFrame({
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       </div>
       <img src={corner} alt="" aria-hidden className="absolute -top-4 -left-4 w-16 sm:w-20" />
-      <img src={corner} alt="" aria-hidden className="absolute -top-4 -right-4 w-16 sm:w-20 scale-x-[-1]" />
-      <img src={corner} alt="" aria-hidden className="absolute -bottom-4 -left-4 w-16 sm:w-20 scale-y-[-1]" />
-      <img src={corner} alt="" aria-hidden className="absolute -bottom-4 -right-4 w-16 sm:w-20 scale-x-[-1] scale-y-[-1]" />
+      <img
+        src={corner}
+        alt=""
+        aria-hidden
+        className="absolute -top-4 -right-4 w-16 sm:w-20 scale-x-[-1]"
+      />
+      <img
+        src={corner}
+        alt=""
+        aria-hidden
+        className="absolute -bottom-4 -left-4 w-16 sm:w-20 scale-y-[-1]"
+      />
+      <img
+        src={corner}
+        alt=""
+        aria-hidden
+        className="absolute -bottom-4 -right-4 w-16 sm:w-20 scale-x-[-1] scale-y-[-1]"
+      />
     </div>
   );
 }

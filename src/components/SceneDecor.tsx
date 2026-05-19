@@ -27,9 +27,7 @@ export function SceneDecor({
           className="absolute inset-0 w-full h-full object-cover opacity-90"
         />
       )}
-      {variant === "dark" && (
-        <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />
-      )}
+      {variant === "dark" && <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />}
       {/* Soft vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,oklch(0.18_0.06_265/0.35)_100%)]" />
 
@@ -46,15 +44,15 @@ export function SceneDecor({
         src={tree}
         alt=""
         aria-hidden
-        style={{ transformOrigin: "bottom center", animationDelay: "0s" }}
-        className="absolute bottom-[18%] -left-12 sm:-left-6 w-44 sm:w-64 md:w-80 opacity-95 animate-[sway_7s_ease-in-out_infinite] motion-reduce:animate-none"
+        style={{ transformOrigin: "bottom center" }}
+        className="scene-tree scene-tree-left absolute bottom-[18%] -left-12 sm:-left-6 w-44 sm:w-64 md:w-80 opacity-95 motion-reduce:animate-none"
       />
       <img
         src={tree}
         alt=""
         aria-hidden
-        style={{ transformOrigin: "bottom center", animationDelay: "1.2s" }}
-        className="absolute bottom-[18%] -right-12 sm:-right-6 w-44 sm:w-64 md:w-80 opacity-95 animate-[sway-reverse_8s_ease-in-out_infinite] motion-reduce:animate-none"
+        style={{ transformOrigin: "bottom center" }}
+        className="scene-tree scene-tree-right absolute bottom-[18%] -right-12 sm:-right-6 w-44 sm:w-64 md:w-80 opacity-95 motion-reduce:animate-none"
       />
 
       {/* Floral bouquets — bottom corners */}
@@ -63,15 +61,37 @@ export function SceneDecor({
         alt=""
         aria-hidden
         style={{ transformOrigin: "bottom left" }}
-        className="absolute -bottom-6 -left-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[breathe_5s_ease-in-out_infinite] motion-reduce:animate-none"
+        className="scene-bouquet scene-bouquet-left absolute -bottom-6 -left-8 w-56 sm:w-72 md:w-96 opacity-95 motion-reduce:animate-none"
       />
       <img
         src={bouquetR}
         alt=""
         aria-hidden
-        style={{ transformOrigin: "bottom right", animationDelay: "1.5s" }}
-        className="absolute -bottom-6 -right-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[breathe_6s_ease-in-out_infinite] motion-reduce:animate-none"
+        style={{ transformOrigin: "bottom right" }}
+        className="scene-bouquet scene-bouquet-right absolute -bottom-6 -right-8 w-56 sm:w-72 md:w-96 opacity-95 motion-reduce:animate-none"
       />
+
+      {/* Floating flower glints around bouquets */}
+      <div className="absolute inset-x-0 bottom-0 h-64 overflow-hidden motion-reduce:hidden">
+        {Array.from({ length: 12 }).map((_, i) => {
+          const fromLeft = i % 2 === 0;
+          return (
+            <span
+              key={i}
+              aria-hidden
+              className="flower-glint absolute rounded-full"
+              style={{
+                left: fromLeft ? `${3 + (i % 6) * 5}%` : `${72 + (i % 6) * 4}%`,
+                bottom: `${8 + (i % 4) * 12}%`,
+                width: `${7 + (i % 3) * 3}px`,
+                height: `${7 + (i % 3) * 3}px`,
+                animationDelay: `${i * 0.45}s`,
+                animationDuration: `${5.2 + (i % 4) * 0.8}s`,
+              }}
+            />
+          );
+        })}
+      </div>
 
       {/* Falling petals */}
       <div className="absolute inset-0 overflow-hidden">

@@ -74,7 +74,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Baswara — A Wedding Invitation Experience" },
-      { name: "description", content: "Baswara & Kirana — an elegant Indonesian wedding invitation. Saturday, 08 May 2027." },
+      {
+        name: "description",
+        content:
+          "Baswara & Kirana — an elegant Indonesian wedding invitation. Saturday, 08 May 2027.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Baswara — Wedding Invitation" },
       { property: "og:description", content: "Join us on our wedding day. Saturday, 08 May 2027." },
