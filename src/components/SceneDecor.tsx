@@ -29,14 +29,14 @@ export function SceneDecor({
       )}
       {variant === "dark" && <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />}
       {/* Soft vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,oklch(0.18_0.06_265/0.35)_100%)]" />
+      <div className="scene-vignette absolute inset-0" />
 
       {/* Gebyok arch — top */}
       <img
         src={gebyok}
         alt=""
         aria-hidden
-        className="absolute -top-2 left-1/2 -translate-x-1/2 w-[180%] sm:w-[120%] md:w-[100%] max-w-none opacity-95 drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]"
+        className="scene-gebyok absolute left-1/2 -translate-x-1/2 max-w-none drop-shadow-[0_6px_20px_rgba(0,0,0,0.2)]"
       />
 
       {/* Trees — flanking sides */}
@@ -45,14 +45,14 @@ export function SceneDecor({
         alt=""
         aria-hidden
         style={{ transformOrigin: "bottom center" }}
-        className="scene-tree scene-tree-left absolute bottom-[18%] -left-12 sm:-left-6 w-44 sm:w-64 md:w-80 opacity-95 motion-reduce:animate-none"
+        className="scene-tree scene-tree-left scene-tree-responsive absolute bottom-[18%] -left-12 sm:-left-6 opacity-95 motion-reduce:animate-none"
       />
       <img
         src={tree}
         alt=""
         aria-hidden
         style={{ transformOrigin: "bottom center" }}
-        className="scene-tree scene-tree-right absolute bottom-[18%] -right-12 sm:-right-6 w-44 sm:w-64 md:w-80 opacity-95 motion-reduce:animate-none"
+        className="scene-tree scene-tree-right scene-tree-responsive absolute bottom-[18%] -right-12 sm:-right-6 opacity-95 motion-reduce:animate-none"
       />
 
       {/* Floral bouquets — bottom corners */}
@@ -61,14 +61,14 @@ export function SceneDecor({
         alt=""
         aria-hidden
         style={{ transformOrigin: "bottom left" }}
-        className="scene-bouquet scene-bouquet-left absolute -bottom-6 -left-8 w-56 sm:w-72 md:w-96 opacity-95 motion-reduce:animate-none"
+        className="scene-bouquet scene-bouquet-left scene-bouquet-responsive absolute -bottom-6 -left-8 opacity-95 motion-reduce:animate-none"
       />
       <img
         src={bouquetR}
         alt=""
         aria-hidden
         style={{ transformOrigin: "bottom right" }}
-        className="scene-bouquet scene-bouquet-right absolute -bottom-6 -right-8 w-56 sm:w-72 md:w-96 opacity-95 motion-reduce:animate-none"
+        className="scene-bouquet scene-bouquet-right scene-bouquet-responsive absolute -bottom-6 -right-8 opacity-95 motion-reduce:animate-none"
       />
 
       {/* Floating flower glints around bouquets */}
@@ -99,7 +99,7 @@ export function SceneDecor({
           <span
             key={i}
             aria-hidden
-            className="absolute top-0 block w-2.5 h-2.5 rounded-full bg-[oklch(0.86_0.08_20)] opacity-70 motion-reduce:hidden"
+            className="petal-dot absolute top-0 block w-2.5 h-2.5 rounded-full opacity-70 motion-reduce:hidden"
             style={{
               left: `${(i * 13 + 5) % 100}%`,
               animation: `petal-fall ${10 + (i % 5) * 2}s linear ${i * 1.3}s infinite`,

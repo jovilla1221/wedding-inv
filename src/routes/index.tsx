@@ -52,6 +52,9 @@ function InvitationPage() {
 
   useEffect(() => {
     document.body.style.overflow = opened ? "auto" : "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [opened]);
 
   const handleOpen = () => {
@@ -127,13 +130,13 @@ function Cover({ opened, onOpen }: { opened: boolean; onOpen: () => void }) {
       }`}
     >
       <SceneDecor />
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-md w-full pt-20 sm:pt-10">
+      <div className="cover-content relative z-10 flex w-full max-w-md flex-col items-center text-center">
         <div className="animate-[fade-up_1s_ease-out_both]">
           <OvalFrame src={coupleHero} alt="Baswara &amp; Kirana" size="lg" />
         </div>
-        <div className="mt-10 backdrop-blur-[2px] bg-ivory/55 rounded-md px-6 py-8 border border-gold/30 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] animate-[fade-up_1.3s_ease-out_both]">
-          <p className="text-navy/80 text-sm tracking-[0.2em]">We invite you to The Wedding of</p>
-          <h1 className="mt-3 font-serif text-5xl sm:text-6xl text-navy">Baswara &amp; Kirana</h1>
+        <div className="cover-card w-full backdrop-blur-[2px] bg-ivory/60 rounded-md border border-gold/30 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] animate-[fade-up_1.3s_ease-out_both]">
+          <p className="cover-eyebrow text-navy/80">We invite you to The Wedding of</p>
+          <h1 className="cover-title mt-3 font-serif text-navy">Baswara &amp; Kirana</h1>
           <p className="mt-2 text-navy/60 italic text-sm">A Wedding Invitation Experience</p>
           <button
             onClick={onOpen}
@@ -154,10 +157,10 @@ function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center section-pad overflow-hidden"
+      className="screen-section relative flex items-center justify-center section-pad overflow-hidden"
     >
       <SceneDecor />
-      <div className="relative z-10 max-w-2xl mx-auto text-center pt-32 sm:pt-40">
+      <div className="hero-content relative z-10 max-w-2xl mx-auto text-center">
         <img
           src={gununganGold}
           alt=""
@@ -166,12 +169,12 @@ function HeroSection() {
           loading="lazy"
         />
         <p className="font-script text-gold text-3xl sm:text-4xl">Our Wedding Day</p>
-        <h2 className="mt-2 font-serif text-6xl sm:text-8xl text-navy">Baswara</h2>
+        <h2 className="hero-title mt-2 font-serif text-navy">Baswara</h2>
         <p className="mt-2 text-navy/70 italic">&amp; Kirana</p>
         <Divider />
         <p className="text-navy font-serif text-xl">Saturday, 08 May 2027</p>
 
-        <div className="mt-10 grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto">
+        <div className="countdown-grid mt-10 grid gap-2 sm:gap-4 max-w-md mx-auto">
           {[
             { v: t.days, l: "Days" },
             { v: t.hours, l: "Hours" },
@@ -768,11 +771,7 @@ function ThankYouSection() {
   return (
     <section
       id="thanks"
-      className="relative min-h-screen flex items-center justify-center section-pad text-center overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(ellipse at center, oklch(0.22 0.06 265) 0%, oklch(0.14 0.05 265) 100%)",
-      }}
+      className="thank-you-bg screen-section relative flex items-center justify-center section-pad text-center overflow-hidden"
     >
       <CornerFloral className="absolute top-4 left-4 w-28 sm:w-44 text-gold/60" />
       <CornerFloral className="absolute top-4 right-4 w-28 sm:w-44 text-gold/60" flip />
@@ -814,7 +813,7 @@ function FloatingNav() {
     { id: "thanks", icon: Heart, label: "Thanks" },
   ];
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 px-3 py-2 rounded-full border border-gold/40 bg-navy/85 backdrop-blur-md shadow-2xl">
+    <nav className="floating-nav fixed left-1/2 -translate-x-1/2 z-40 px-3 py-2 rounded-full border border-gold/40 bg-navy/85 backdrop-blur-md shadow-2xl">
       <ul className="flex items-center gap-1 sm:gap-2">
         {items.map((it) => (
           <li key={it.id}>
@@ -840,7 +839,7 @@ function MusicButton({ playing, onToggle }: { playing: boolean; onToggle: () => 
   return (
     <button
       onClick={onToggle}
-      className="fixed bottom-24 right-5 z-40 w-12 h-12 rounded-full bg-gold text-navy flex items-center justify-center shadow-xl hover:scale-110 transition animate-[float_4s_ease-in-out_infinite]"
+      className="music-button fixed z-40 w-12 h-12 rounded-full bg-gold text-navy flex items-center justify-center shadow-xl hover:scale-110 transition animate-[float_4s_ease-in-out_infinite]"
       aria-label="Toggle music"
     >
       {playing ? (

@@ -16,8 +16,8 @@ export function Gunungan({ className = "" }: { className?: string }) {
     <svg viewBox="0 0 200 220" className={className} aria-hidden>
       <defs>
         <linearGradient id="goldgrad" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="oklch(0.85 0.13 85)" />
-          <stop offset="100%" stopColor="oklch(0.6 0.12 70)" />
+          <stop offset="0%" stopColor="#dbb34d" />
+          <stop offset="100%" stopColor="#a87322" />
         </linearGradient>
       </defs>
       <g fill="none" stroke="url(#goldgrad)" strokeWidth="1.2">
