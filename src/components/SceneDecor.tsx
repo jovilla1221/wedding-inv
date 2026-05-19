@@ -46,13 +46,15 @@ export function SceneDecor({
         src={tree}
         alt=""
         aria-hidden
-        className="absolute bottom-[18%] -left-12 sm:-left-6 w-44 sm:w-64 md:w-80 opacity-95 animate-[fade-in_1.6s_ease-out_both]"
+        style={{ transformOrigin: "bottom center", animationDelay: "0s" }}
+        className="absolute bottom-[18%] -left-12 sm:-left-6 w-44 sm:w-64 md:w-80 opacity-95 animate-[sway_7s_ease-in-out_infinite] motion-reduce:animate-none"
       />
       <img
         src={tree}
         alt=""
         aria-hidden
-        className="absolute bottom-[18%] -right-12 sm:-right-6 w-44 sm:w-64 md:w-80 opacity-95 scale-x-[-1] animate-[fade-in_1.6s_ease-out_both]"
+        style={{ transformOrigin: "bottom center", animationDelay: "1.2s" }}
+        className="absolute bottom-[18%] -right-12 sm:-right-6 w-44 sm:w-64 md:w-80 opacity-95 animate-[sway-reverse_8s_ease-in-out_infinite] motion-reduce:animate-none"
       />
 
       {/* Floral bouquets — bottom corners */}
@@ -60,14 +62,32 @@ export function SceneDecor({
         src={bouquetL}
         alt=""
         aria-hidden
-        className="absolute -bottom-6 -left-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[fade-up_1.4s_ease-out_both]"
+        style={{ transformOrigin: "bottom left" }}
+        className="absolute -bottom-6 -left-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[breathe_5s_ease-in-out_infinite] motion-reduce:animate-none"
       />
       <img
         src={bouquetR}
         alt=""
         aria-hidden
-        className="absolute -bottom-6 -right-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[fade-up_1.4s_ease-out_both]"
+        style={{ transformOrigin: "bottom right", animationDelay: "1.5s" }}
+        className="absolute -bottom-6 -right-8 w-56 sm:w-72 md:w-96 opacity-95 animate-[breathe_6s_ease-in-out_infinite] motion-reduce:animate-none"
       />
+
+      {/* Falling petals */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <span
+            key={i}
+            aria-hidden
+            className="absolute top-0 block w-2.5 h-2.5 rounded-full bg-[oklch(0.86_0.08_20)] opacity-70 motion-reduce:hidden"
+            style={{
+              left: `${(i * 13 + 5) % 100}%`,
+              animation: `petal-fall ${10 + (i % 5) * 2}s linear ${i * 1.3}s infinite`,
+              filter: "blur(0.5px)",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
