@@ -36,19 +36,52 @@ import { toast } from "sonner";
 import { Divider, Gunungan, CornerFloral } from "@/components/Ornament";
 import { SceneDecor } from "@/components/SceneDecor";
 import { OvalFrame } from "@/components/OvalFrame";
-import coupleHero from "@/assets/couple-hero.jpg";
+import coupleHero from "@/assets/pengantin  both.png";
 import gununganGold from "@/assets/gunungan-gold.png";
-import brideImg from "@/assets/bride.jpg";
-import groomImg from "@/assets/groom.jpg";
+import brideImg from "@/assets/pengantin wanita.png";
+import groomImg from "@/assets/pengantin pria.png";
+import rsvpBgNew from "@/assets/rsvp_bg_new.png";
+import bgThankYouLandscape from "@/assets/bg thank  you.png";
+import bgThankYouPortrait from "@/assets/bg_thank_you_portrait.png";
+import { supabase } from "@/lib/supabase";
+import janjiSuciAudio from "@/assets/janji-suci.mp3";
 
-export const Route = createFileRoute("/")({ component: InvitationPage });
+export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): { to?: string } => {
+    return { to: search.to as string | undefined };
+  },
+  component: InvitationPage,
+});
 
-const WEDDING_DATE = new Date("2027-05-08T08:00:00+07:00");
+const WEDDING_DATE = new Date("2026-06-02T08:00:00+07:00");
+
+const MUSIC_START_TIME = 52; // Detik dimulainya reff (Janji Suci)
 
 function InvitationPage() {
+  const { to } = Route.useSearch();
+  const [guestName, setGuestName] = useState<string>("");
   const [opened, setOpened] = useState(false);
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (to) {
+      supabase
+        .from("guests")
+        .select("name")
+        .eq("slug", to)
+        .single()
+        .then(({ data }) => {
+          if (data) {
+            setGuestName(data.name);
+          } else {
+            setGuestName("Tamu Undangan");
+          }
+        });
+    } else {
+      setGuestName("Tamu Undangan");
+    }
+  }, [to]);
 
   useEffect(() => {
     document.body.style.overflow = opened ? "auto" : "hidden";
@@ -63,6 +96,7 @@ function InvitationPage() {
     if (a) {
       a.muted = false;
       a.volume = 0.8;
+      a.currentTime = MUSIC_START_TIME;
       const p = a.play();
       if (p && typeof p.then === "function") {
         p.then(() => setPlaying(true)).catch(() => setPlaying(false));
@@ -79,6 +113,9 @@ function InvitationPage() {
       setPlaying(false);
     } else {
       a.muted = false;
+      if (a.currentTime === 0) {
+        a.currentTime = MUSIC_START_TIME;
+      }
       const p = a.play();
       if (p && typeof p.then === "function") {
         p.then(() => setPlaying(true)).catch(() =>
@@ -98,20 +135,17 @@ function InvitationPage() {
         preload="auto"
         playsInline
         {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as Record<string, string>)}
-        src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_31c1e5b1ef.mp3?filename=relaxing-mountains-rivers-streams-running-water-18178.mp3"
+        src={janjiSuciAudio}
       />
-      <Cover opened={opened} onOpen={handleOpen} />
+      <Cover opened={opened} onOpen={handleOpen} guestName={guestName} />
       {opened && (
         <main className="animate-[fade-in_1.4s_ease-out_both]">
           <HeroSection />
           <CoupleSection />
-          <StorySection />
           <EventSection />
           <RSVPSection />
           <WishesSection />
           <GiftSection />
-          <ApologySection />
-          <StreamingSection />
           <ThankYouSection />
           <FloatingNav />
           <MusicButton playing={playing} onToggle={toggleMusic} />
@@ -121,8 +155,41 @@ function InvitationPage() {
   );
 }
 
+/* ============== FADE IN SECTION ============== */
+function FadeInSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const [isVisible, setVisible] = useState(false);
+  const domRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    if (domRef.current) observer.observe(domRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={domRef}
+      className={`transition-all duration-1000 ease-out transform ${
+        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-95"
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 /* ============== COVER ============== */
-function Cover({ opened, onOpen }: { opened: boolean; onOpen: () => void }) {
+function Cover({ opened, onOpen, guestName }: { opened: boolean; onOpen: () => void; guestName: string }) {
   return (
     <section
       className={`fixed inset-0 z-[60] flex items-center justify-center overflow-hidden transition-all duration-1000 ${
@@ -132,11 +199,14 @@ function Cover({ opened, onOpen }: { opened: boolean; onOpen: () => void }) {
       <SceneDecor />
       <div className="cover-content relative z-10 flex w-full max-w-md flex-col items-center text-center">
         <div className="animate-[fade-up_1s_ease-out_both]">
-          <OvalFrame src={coupleHero} alt="Baswara &amp; Kirana" size="lg" />
+          <OvalFrame src={coupleHero} alt="Naufal &amp; Erika" size="lg" />
         </div>
-        <div className="cover-card w-full backdrop-blur-[2px] bg-ivory/60 rounded-md border border-gold/30 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] animate-[fade-up_1.3s_ease-out_both]">
-          <p className="cover-eyebrow text-navy/80">We invite you to The Wedding of</p>
-          <h1 className="cover-title mt-3 font-serif text-navy">Baswara &amp; Kirana</h1>
+        <div className="cover-card w-full backdrop-blur-[2px] bg-ivory/60 rounded-md border border-gold/30 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.4)] animate-[fade-up_1.3s_ease-out_both] p-6 text-center">
+          <p className="cover-eyebrow text-navy/80 mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+          <h2 className="font-serif text-2xl text-navy mb-4 font-bold min-h-[32px]">{guestName}</h2>
+          <Divider />
+          <p className="cover-eyebrow text-navy/80 mt-4">We invite you to The Wedding of</p>
+          <h1 className="cover-title mt-3 font-serif text-navy">Naufal &amp; Erika</h1>
           <p className="mt-2 text-navy/60 italic text-sm">A Wedding Invitation Experience</p>
           <button
             onClick={onOpen}
@@ -151,6 +221,40 @@ function Cover({ opened, onOpen }: { opened: boolean; onOpen: () => void }) {
   );
 }
 
+/* ============== FLOATING BLOSSOMS ============== */
+function FloatingBlossoms() {
+  const blossoms = useMemo(() => {
+    return Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      animationDuration: `${10 + Math.random() * 10}s`,
+      animationDelay: `-${Math.random() * 15}s`,
+      size: `${8 + Math.random() * 12}px`,
+      opacity: 0.5 + Math.random() * 0.5,
+    }));
+  }, []);
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden z-[5]">
+      {blossoms.map((b) => (
+        <div
+          key={b.id}
+          className="absolute top-0 rounded-full bg-[#dbb34d] blur-[1.5px]"
+          style={{
+            left: b.left,
+            width: b.size,
+            height: b.size,
+            opacity: b.opacity,
+            animation: `blossom-fall ${b.animationDuration} linear infinite`,
+            animationDelay: b.animationDelay,
+            boxShadow: "0 0 15px rgba(219, 179, 77, 0.9)",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ============== HERO ============== */
 function HeroSection() {
   const t = useCountdown(WEDDING_DATE);
@@ -160,7 +264,8 @@ function HeroSection() {
       className="screen-section relative flex items-center justify-center section-pad overflow-hidden"
     >
       <SceneDecor />
-      <div className="hero-content relative z-10 max-w-2xl mx-auto text-center">
+      <FloatingBlossoms />
+      <FadeInSection className="hero-content relative z-10 max-w-2xl mx-auto text-center mt-32 sm:mt-40">
         <img
           src={gununganGold}
           alt=""
@@ -169,10 +274,9 @@ function HeroSection() {
           loading="lazy"
         />
         <p className="font-script text-gold text-3xl sm:text-4xl">Our Wedding Day</p>
-        <h2 className="hero-title mt-2 font-serif text-navy">Baswara</h2>
-        <p className="mt-2 text-navy/70 italic">&amp; Kirana</p>
+        <h2 className="hero-title mt-2 font-serif text-navy">Naufal &amp; Erika</h2>
         <Divider />
-        <p className="text-navy font-serif text-xl">Saturday, 08 May 2027</p>
+        <p className="text-navy font-serif text-xl">Selasa, 02 Juni 2026</p>
 
         <div className="countdown-grid mt-10 grid gap-2 sm:gap-4 max-w-md mx-auto">
           {[
@@ -198,14 +302,14 @@ function HeroSection() {
         >
           <a
             href={`data:text/calendar;charset=utf-8,${encodeURIComponent(
-              `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Baswara & Kirana Wedding\nDTSTART:20270508T010000Z\nDTEND:20270508T030000Z\nLOCATION:Hotel Shangri-La, Jakarta\nEND:VEVENT\nEND:VCALENDAR`,
+              `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Naufal & Erika Wedding\nDTSTART:20260602T010000Z\nDTEND:20260602T030000Z\nLOCATION:Hotel Shangri-La, Jakarta\nEND:VEVENT\nEND:VCALENDAR`,
             )}`}
-            download="baswara-wedding.ics"
+            download="naufal-erika-wedding.ics"
           >
             <Calendar className="mr-2" size={14} /> Save the Date
           </a>
         </Button>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
@@ -228,7 +332,7 @@ function useCountdown(date: Date) {
 function CoupleSection() {
   return (
     <section id="couple" className="section-pad bg-gradient-to-b from-ivory to-muted/60">
-      <div className="max-w-4xl mx-auto text-center">
+      <FadeInSection className="max-w-4xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">The Beloved</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy mt-1">Bride &amp; Groom</h2>
         <Divider />
@@ -239,19 +343,17 @@ function CoupleSection() {
 
         <div className="mt-14 grid sm:grid-cols-2 gap-10">
           <ProfileCard
-            name="Baswara Pratama"
-            parents="Putra dari Bapak Arjuna & Ibu Lestari"
-            handle="@baswara.p"
-            initials="B"
+            name="Muhammad Naufal Amru"
+            parents="Putra dari Bpk Moh. Shohibul Huda (Alm.) & Ibu Yahdi Elfina Yuliyati"
+            initials="N"
           />
           <ProfileCard
-            name="Kirana Ayu"
-            parents="Putri dari Bapak Mahendra & Ibu Sekar"
-            handle="@kirana.ayu"
-            initials="K"
+            name="Erika Putri Rahmahwati "
+            parents="Putri dari Bpk. Baroji & Ibu Sunarwati"
+            initials="E"
           />
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
@@ -259,28 +361,18 @@ function CoupleSection() {
 function ProfileCard({
   name,
   parents,
-  handle,
   initials,
 }: {
   name: string;
   parents: string;
-  handle: string;
   initials: string;
 }) {
-  const isGroom = initials === "B";
+  const isGroom = initials === "N";
   return (
     <div className="ornament-frame rounded-sm p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both]">
       <OvalFrame src={isGroom ? groomImg : brideImg} alt={name} size="md" />
       <h3 className="mt-8 font-serif text-3xl text-navy">{name}</h3>
       <p className="mt-2 text-sm text-muted-foreground italic max-w-xs">{parents}</p>
-      <a
-        href={`https://instagram.com/${handle.replace("@", "")}`}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-4 inline-flex items-center gap-2 text-gold hover:text-navy transition-colors text-sm"
-      >
-        <Instagram size={16} /> {handle}
-      </a>
     </div>
   );
 }
@@ -306,7 +398,7 @@ function StorySection() {
   ];
   return (
     <section className="section-pad batik-bg">
-      <div className="max-w-3xl mx-auto text-center">
+      <FadeInSection className="max-w-3xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">A Journey</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Our Story</h2>
         <Divider />
@@ -326,7 +418,7 @@ function StorySection() {
             </div>
           ))}
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
@@ -336,23 +428,20 @@ function EventSection() {
   const events = [
     {
       title: "Akad Nikah",
-      date: "Saturday, 08 May 2027",
+      date: "Selasa, 2 Juni 2026",
       time: "08:00 - 10:00 WIB",
-      venue: "Hotel Shangri-La",
-      address: "Jl. Jend. Sudirman No.Kav. 1, Jakarta Pusat",
+      address: "Ds. Gilang, Ngunut, Tulungagung Regency, East Java 66292",
     },
     {
       title: "Resepsi",
       date: "Selasa, 2 Juni 2026",
       time: "15:00 - 17:00 WIB",
-      venue: "Hotel Shangri-La",
-      address: "Jl. Jend. Sudirman No.Kav. 1, Jakarta Pusat",
+      address: "Ds. Gilang, Ngunut, Tulungagung Regency, East Java 66292",
     },
   ];
-  const pastels = ["#F8D7D2", "#D8E6F2", "#E5D9F2", "#E9DFC9", "#D6E7DA", "#F4E2C9"];
   return (
     <section id="event" className="section-pad bg-gradient-to-b from-muted/40 to-ivory">
-      <div className="max-w-4xl mx-auto text-center">
+      <FadeInSection className="max-w-4xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">When & Where</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Lokasi &amp; Acara</h2>
         <Divider />
@@ -377,11 +466,10 @@ function EventSection() {
                   <Clock size={14} className="text-gold" />
                   {e.time}
                 </div>
-                <div className="flex items-center justify-center gap-2 text-navy">
-                  <MapPin size={14} className="text-gold" />
-                  {e.venue}
-                </div>
-                <p className="text-muted-foreground text-xs max-w-xs mx-auto">{e.address}</p>
+                <p className="flex items-start justify-center gap-2 text-muted-foreground text-xs max-w-xs mx-auto">
+                  <MapPin size={14} className="text-gold shrink-0 mt-0.5" />
+                  {e.address}
+                </p>
               </div>
               <Button
                 asChild
@@ -389,7 +477,7 @@ function EventSection() {
                 className="mt-6 border-gold text-navy hover:bg-gold hover:text-navy rounded-full"
               >
                 <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(e.venue + " " + e.address)}`}
+                  href="https://maps.app.goo.gl/LN1oGyi7scf9B35EA?g_st=ac"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -398,22 +486,7 @@ function EventSection() {
               </Button>
             </div>
           ))}
-        </div>
-
-        <div className="mt-16 ornament-frame rounded-sm p-8 max-w-xl mx-auto">
-          <h3 className="font-serif text-2xl text-navy">Dress Code</h3>
-          <p className="text-muted-foreground italic mt-1">Any kind of pastel</p>
-          <div className="flex justify-center gap-3 mt-5">
-            {pastels.map((c) => (
-              <span
-                key={c}
-                className="w-8 h-8 rounded-full border border-gold/50 shadow-inner"
-                style={{ background: c }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+        </div>      </FadeInSection>
     </section>
   );
 }
@@ -421,42 +494,69 @@ function EventSection() {
 /* ============== RSVP ============== */
 function RSVPSection() {
   const [form, setForm] = useState({ name: "", attend: "attend", guests: "1", message: "" });
-  const submit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name) return toast.error("Mohon isi nama Anda");
+    
+    setIsSubmitting(true);
+    const { error } = await supabase.from("rsvps").insert([
+      {
+        name: form.name,
+        is_attending: form.attend === "attend",
+        guest_count: parseInt(form.guests) || 1,
+        message: form.message,
+      }
+    ]);
+    setIsSubmitting(false);
+
+    if (error) {
+      toast.error("Gagal mengirim RSVP. Coba lagi nanti.");
+      return;
+    }
+
     toast.success("Terima kasih! Konfirmasi kehadiran Anda telah kami terima.", {
       description: `${form.name} — ${form.attend === "attend" ? "Hadir" : "Tidak Hadir"} (${form.guests} tamu)`,
     });
     setForm({ name: "", attend: "attend", guests: "1", message: "" });
   };
   return (
-    <section id="rsvp" className="section-pad bg-navy text-ivory relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <Gunungan className="absolute -top-10 left-1/2 -translate-x-1/2 w-[500px] text-gold" />
+    <section id="rsvp" className="section-pad bg-navy text-ivory relative overflow-hidden min-h-screen flex items-center justify-center">
+      {/* New Javanese Gunungan Background */}
+      <div className="absolute inset-0 z-0 bg-[#070b19]">
+        <img 
+          src={rsvpBgNew} 
+          alt="Luxury RSVP Background" 
+          className="w-full h-full object-cover object-top opacity-85"
+        />
+        {/* Soft overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-[#070b19]/30"></div>
       </div>
-      <div className="relative max-w-xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">Confirm Attendance</p>
+      <FadeInSection className="relative z-10 w-full max-w-xl mx-auto text-center px-6">
+        <p className="font-script text-gold text-3xl">Konfirmasi Kehadiran</p>
         <h2 className="font-serif text-4xl sm:text-5xl gold-text">RSVP</h2>
         <Divider />
         <form onSubmit={submit} className="mt-8 space-y-5 text-left">
           <div>
-            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Name</Label>
+            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Nama Lengkap</Label>
             <Input
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="mt-2 bg-ivory/5 border-gold/30 text-ivory placeholder:text-ivory/40 focus-visible:ring-gold"
+              placeholder="Masukkan nama lengkap Anda"
             />
           </div>
           <div>
-            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Confirmation</Label>
+            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Kehadiran</Label>
             <RadioGroup
               value={form.attend}
               onValueChange={(v) => setForm({ ...form, attend: v })}
               className="mt-3 grid grid-cols-2 gap-3"
             >
               {[
-                { v: "attend", l: "Attend" },
-                { v: "not", l: "Not Attend" },
+                { v: "attend", l: "Hadir" },
+                { v: "not", l: "Tidak Hadir" },
               ].map((o) => (
                 <Label
                   key={o.v}
@@ -474,7 +574,7 @@ function RSVPSection() {
           </div>
           <div>
             <Label className="text-ivory/80 text-xs tracking-widest uppercase">
-              Number of Guests
+              Jumlah Tamu
             </Label>
             <Input
               type="number"
@@ -486,62 +586,65 @@ function RSVPSection() {
             />
           </div>
           <div>
-            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Message</Label>
+            <Label className="text-ivory/80 text-xs tracking-widest uppercase">Pesan / Ucapan</Label>
             <Textarea
               rows={3}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="mt-2 bg-ivory/5 border-gold/30 text-ivory placeholder:text-ivory/40 focus-visible:ring-gold"
+              placeholder="Tulis ucapan atau pesan doa restu Anda di sini..."
             />
           </div>
           <Button
             type="submit"
+            disabled={isSubmitting}
             className="w-full bg-gold text-navy hover:bg-gold-soft rounded-full py-6 tracking-widest text-xs uppercase"
           >
-            <Send size={14} className="mr-2" /> Send RSVP
+            {isSubmitting ? "Mengirim..." : <><Send size={14} className="mr-2" /> Kirim Konfirmasi</>}
           </Button>
         </form>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
 
 /* ============== WISHES ============== */
-type Wish = { id: number; name: string; message: string; at: string };
+type Wish = { id: string; name: string; message: string; created_at: string };
 function WishesSection() {
-  const [wishes, setWishes] = useState<Wish[]>([
-    {
-      id: 1,
-      name: "Dewi & Reza",
-      message: "Selamat menempuh hidup baru! Semoga sakinah, mawaddah, warahmah.",
-      at: "1 jam lalu",
-    },
-    {
-      id: 2,
-      name: "Galih Pratomo",
-      message: "Barakallah ya kalian berdua. Bahagia selalu!",
-      at: "3 jam lalu",
-    },
-    {
-      id: 3,
-      name: "Maya",
-      message: "Doaku menyertai. Selamat ya untuk hari bahagianya.",
-      at: "kemarin",
-    },
-  ]);
+  const [wishes, setWishes] = useState<Wish[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const submit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchWishes();
+  }, []);
+
+  const fetchWishes = async () => {
+    const { data } = await supabase.from("wishes").select("*").order("created_at", { ascending: false });
+    if (data) setWishes(data);
+  };
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !message) return toast.error("Lengkapi nama dan ucapan");
-    setWishes([{ id: Date.now(), name, message, at: "baru saja" }, ...wishes]);
+    
+    setIsSubmitting(true);
+    const { error } = await supabase.from("wishes").insert([{ name, message }]);
+    setIsSubmitting(false);
+
+    if (error) {
+      return toast.error("Gagal mengirim ucapan: " + error.message);
+    }
+
     setName("");
     setMessage("");
     toast.success("Doa dan ucapanmu telah terkirim 🌸");
+    fetchWishes();
   };
   return (
     <section className="section-pad bg-gradient-to-b from-ivory to-muted/40">
-      <div className="max-w-3xl mx-auto text-center">
+      <FadeInSection className="max-w-3xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">Doa & Restu</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Wedding Wishes</h2>
         <Divider />
@@ -558,9 +661,10 @@ function WishesSection() {
           />
           <Button
             type="submit"
+            disabled={isSubmitting}
             className="w-full bg-navy text-ivory hover:bg-navy-deep rounded-full"
           >
-            <HandHeart size={14} className="mr-2" /> Send Wishes
+            {isSubmitting ? "Mengirim..." : <><HandHeart size={14} className="mr-2" /> Send Wishes</>}
           </Button>
         </form>
 
@@ -576,36 +680,30 @@ function WishesSection() {
                 </div>
                 <div>
                   <div className="font-serif text-navy">{w.name}</div>
-                  <div className="text-xs text-muted-foreground">{w.at}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {new Date(w.created_at).toLocaleDateString("id-ID", {
+                      day: "numeric", month: "long", year: "numeric"
+                    })}
+                  </div>
                 </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{w.message}</p>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{w.message}</p>
             </div>
           ))}
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
 
 /* ============== GIFT ============== */
 const ACCOUNTS = [
-  { bank: "BCA", number: "1234567890", name: "Baswara Pratama" },
-  { bank: "Mandiri", number: "9876543210", name: "Kirana Ayu" },
-];
-const GIFTS = [
-  { name: "Water Heater", price: "Rp 1.250.000" },
-  { name: "Coffee Maker", price: "Rp 850.000" },
-  { name: "Honeymoon Fund", price: "Rp 500.000" },
-  { name: "Dining Chair", price: "Rp 650.000" },
-  { name: "Spring Bed", price: "Rp 3.500.000" },
-  { name: "Vacuum Cleaner", price: "Rp 1.100.000" },
+  { bank: "BCA", number: "1234567890", name: "Naufal" },
+  { bank: "Mandiri", number: "9876543210", name: "Erika" },
 ];
 
 function GiftSection() {
   const [copied, setCopied] = useState<string | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
-  const [gift, setGift] = useState({ name: "", email: "", note: "" });
 
   const copy = async (num: string) => {
     try {
@@ -616,16 +714,10 @@ function GiftSection() {
       toast.error("Tidak dapat menyalin");
     }
   };
-  const sendGift = () => {
-    if (!gift.name) return toast.error("Isi nama pengirim");
-    toast.success(`Terima kasih atas hadiah "${selected}"!`);
-    setSelected(null);
-    setGift({ name: "", email: "", note: "" });
-  };
 
   return (
     <section id="gift" className="section-pad batik-bg">
-      <div className="max-w-4xl mx-auto text-center">
+      <FadeInSection className="max-w-4xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">Send a Gift</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">E-Angpao</h2>
         <Divider />
@@ -660,65 +752,7 @@ function GiftSection() {
             </div>
           ))}
         </div>
-
-        <h3 className="mt-16 font-serif text-2xl text-navy">Gift Registry</h3>
-        <Divider />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-          {GIFTS.map((g) => (
-            <div key={g.name} className="ornament-frame rounded-sm p-4 text-left">
-              <div className="aspect-square rounded-sm bg-gradient-to-br from-secondary via-muted to-blush/40 flex items-center justify-center">
-                <Gift className="text-gold/70" size={36} />
-              </div>
-              <div className="mt-3 font-serif text-navy text-lg">{g.name}</div>
-              <div className="text-xs text-muted-foreground">{g.price}</div>
-              <Button
-                onClick={() => setSelected(g.name)}
-                size="sm"
-                className="mt-3 w-full bg-gold text-navy hover:bg-gold-soft rounded-full"
-              >
-                Hadiahkan
-              </Button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
-        <DialogContent className="bg-ivory">
-          <DialogHeader>
-            <DialogTitle className="font-serif text-navy text-2xl">
-              Hadiahkan — {selected}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3 mt-2">
-            <Input
-              placeholder="Nama Anda"
-              value={gift.name}
-              onChange={(e) => setGift({ ...gift, name: e.target.value })}
-            />
-            <Input
-              type="email"
-              placeholder="Email"
-              value={gift.email}
-              onChange={(e) => setGift({ ...gift, email: e.target.value })}
-            />
-            <Textarea
-              placeholder="Pesan untuk pengantin..."
-              value={gift.note}
-              onChange={(e) => setGift({ ...gift, note: e.target.value })}
-            />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setSelected(null)}>
-              Batal
-            </Button>
-            <Button onClick={sendGift} className="bg-navy text-ivory hover:bg-navy-deep">
-              <Gift size={14} className="mr-2" />
-              Konfirmasi
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      </FadeInSection>
     </section>
   );
 }
@@ -727,7 +761,7 @@ function GiftSection() {
 function ApologySection() {
   return (
     <section className="section-pad bg-navy text-ivory">
-      <div className="max-w-2xl mx-auto text-center">
+      <FadeInSection className="max-w-2xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">Mohon Maaf</p>
         <h2 className="font-serif text-4xl gold-text">Apology</h2>
         <Divider />
@@ -737,7 +771,7 @@ function ApologySection() {
           kami.
         </p>
         <Divider />
-      </div>
+      </FadeInSection>
     </section>
   );
 }
@@ -746,7 +780,7 @@ function ApologySection() {
 function StreamingSection() {
   return (
     <section className="section-pad bg-gradient-to-b from-ivory to-muted/40">
-      <div className="max-w-2xl mx-auto text-center">
+      <FadeInSection className="max-w-2xl mx-auto text-center">
         <p className="font-script text-gold text-3xl">Watch Live</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Live Streaming</h2>
         <Divider />
@@ -761,7 +795,7 @@ function StreamingSection() {
             </a>
           </Button>
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
@@ -773,6 +807,18 @@ function ThankYouSection() {
       id="thanks"
       className="thank-you-bg screen-section relative flex items-center justify-center section-pad text-center overflow-hidden"
     >
+      <img
+        src={bgThankYouLandscape}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover object-center hidden sm:block pointer-events-none"
+      />
+      <img
+        src={bgThankYouPortrait}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover object-center sm:hidden pointer-events-none"
+      />
       <CornerFloral className="absolute top-4 left-4 w-28 sm:w-44 text-gold/60" />
       <CornerFloral className="absolute top-4 right-4 w-28 sm:w-44 text-gold/60" flip />
       <CornerFloral
@@ -783,7 +829,7 @@ function ThankYouSection() {
         className="absolute bottom-4 right-4 w-28 sm:w-44 text-gold/60"
         style={{ transform: "scale(-1,-1)" }}
       />
-      <div className="relative max-w-xl">
+      <FadeInSection className="relative max-w-xl">
         <Sparkles className="mx-auto text-gold animate-[float_6s_ease-in-out_infinite]" size={32} />
         <p className="font-script text-gold text-3xl mt-4">With Love</p>
         <h2 className="font-serif text-5xl sm:text-7xl gold-text">Thank You</h2>
@@ -793,11 +839,11 @@ function ThankYouSection() {
           diberikan menjadi berkah bagi kita semua.
         </p>
         <Divider />
-        <p className="font-serif text-2xl text-ivory mt-4">Baswara &amp; Kirana</p>
+        <p className="font-serif text-2xl text-ivory mt-4">Naufal &amp; Erika</p>
         <p className="text-xs text-ivory/50 mt-10">
-          Baswara © 2026. This invitation saves paper and reduces carbon footprint.
+          Baswara Creative © 2026. This invitation saves paper and reduces carbon footprint.
         </p>
-      </div>
+      </FadeInSection>
     </section>
   );
 }

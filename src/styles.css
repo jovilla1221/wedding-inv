@@ -193,6 +193,22 @@
     transform: translate3d(0, -6px, 0) scale(1.03);
   }
 }
+@keyframes blossom-fall {
+  0% {
+    transform: translate3d(0, -20px, 0) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(50px, 110vh, 0) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
 @keyframes tree-lively-left {
   0%,
   100% {
@@ -280,6 +296,87 @@
 @keyframes reveal-curtain-right {
   to {
     transform: translateX(100%);
+  }
+}
+
+/* =========================================================================
+   COUPLE SECTION — Malay-Islamic Decorative Animations
+   ========================================================================= */
+@keyframes lantern-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(199, 154, 53, 0.3)) brightness(1);
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(199, 154, 53, 0.55)) brightness(1.08);
+    transform: translateY(-3px);
+  }
+}
+@keyframes gentle-sway {
+  0%, 100% {
+    transform: rotate(0deg) translateX(0);
+  }
+  25% {
+    transform: rotate(1.5deg) translateX(2px);
+  }
+  75% {
+    transform: rotate(-1.5deg) translateX(-2px);
+  }
+}
+@keyframes gentle-sway-reverse {
+  0%, 100% {
+    transform: scaleX(-1) rotate(0deg) translateX(0);
+  }
+  25% {
+    transform: scaleX(-1) rotate(1.5deg) translateX(2px);
+  }
+  75% {
+    transform: scaleX(-1) rotate(-1.5deg) translateX(-2px);
+  }
+}
+@keyframes petal-drift {
+  0% {
+    transform: translate(0, -20px) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(30px, 40vh) rotate(180deg) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-10px, 85vh) rotate(360deg) scale(0.4);
+    opacity: 0;
+  }
+}
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1) rotate(180deg);
+  }
+}
+@keyframes wave-flow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes arch-breathe {
+  0%, 100% {
+    opacity: 0.12;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.18;
+    transform: translateX(-50%) scale(1.01);
   }
 }
 
@@ -456,6 +553,124 @@
         color-mix(in oklab, var(--gold) 10%, transparent) 0,
         transparent 30%
       );
+  }
+
+  /* =========================================================================
+     COUPLE SECTION — Malay-Islamic Decorative Styles
+     ========================================================================= */
+  .couple-section-bg {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg,
+        #fbf8ec 0%,
+        #f7f0da 15%,
+        #f3ead0 40%,
+        #efe3c4 65%,
+        #f5edda 85%,
+        #fbf8ec 100%
+      );
+  }
+  @supports (color: oklch(0.7 0.1 80)) {
+    .couple-section-bg {
+      background:
+        linear-gradient(180deg,
+          oklch(0.975 0.012 85) 0%,
+          oklch(0.955 0.025 85) 15%,
+          oklch(0.94 0.032 82) 40%,
+          oklch(0.93 0.038 80) 65%,
+          oklch(0.95 0.02 85) 85%,
+          oklch(0.975 0.012 85) 100%
+        );
+    }
+  }
+
+  .couple-gold-border {
+    border: 1px solid rgba(199, 154, 53, 0.25);
+    box-shadow:
+      inset 0 0 80px rgba(199, 154, 53, 0.04),
+      0 0 0 4px rgba(251, 248, 236, 0.6),
+      0 0 0 5px rgba(199, 154, 53, 0.15);
+  }
+
+  .couple-corner-ornament::before,
+  .couple-corner-ornament::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .couple-corner-ornament::before {
+    top: 12px;
+    left: 12px;
+    border-top: 2px solid var(--gold);
+    border-left: 2px solid var(--gold);
+    border-top-left-radius: 6px;
+  }
+  .couple-corner-ornament::after {
+    bottom: 12px;
+    right: 12px;
+    border-bottom: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+    border-bottom-right-radius: 6px;
+  }
+
+  .couple-lantern {
+    animation: lantern-glow 6s ease-in-out infinite;
+    will-change: filter, transform;
+  }
+  .couple-lantern-delay {
+    animation-delay: 2s;
+  }
+
+  .couple-floral-left {
+    animation: gentle-sway 7s ease-in-out infinite;
+    will-change: transform;
+  }
+  .couple-floral-right {
+    transform: scaleX(-1);
+    transform-origin: bottom left;
+    animation: gentle-sway-reverse 7.5s ease-in-out 1s infinite;
+    will-change: transform;
+  }
+
+  .couple-sparkle {
+    animation: sparkle-twinkle var(--sparkle-dur, 4s) ease-in-out var(--sparkle-delay, 0s) infinite;
+    will-change: opacity, transform;
+  }
+
+  .couple-petal {
+    animation: petal-drift var(--petal-dur, 12s) ease-in-out var(--petal-delay, 0s) infinite;
+    will-change: transform, opacity;
+  }
+
+  .couple-wave-bottom {
+    animation: wave-flow 20s linear infinite;
+    will-change: transform;
+  }
+
+  .couple-arch {
+    animation: arch-breathe 8s ease-in-out infinite;
+    will-change: opacity, transform;
+  }
+
+  .couple-mosque-silhouette {
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 70%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .couple-lantern,
+    .couple-floral-left,
+    .couple-floral-right,
+    .couple-sparkle,
+    .couple-petal,
+    .couple-wave-bottom,
+    .couple-arch {
+      animation: none !important;
+    }
   }
 
   .section-pad {
