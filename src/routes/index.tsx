@@ -44,7 +44,7 @@ import rsvpBgNew from "@/assets/rsvp_bg_new.png";
 import bgThankYouLandscape from "@/assets/bg thank  you.png";
 import bgThankYouPortrait from "@/assets/bg_thank_you_portrait.png";
 import { supabase } from "@/lib/supabase";
-import janjiSuciAudio from "@/assets/janji-suci.mp3";
+import backgroundMusic from "@/assets/Gending Manten Adat Jawa Kebo Giro.mp3";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>): { to?: string } => {
@@ -55,7 +55,7 @@ export const Route = createFileRoute("/")({
 
 const WEDDING_DATE = new Date("2026-06-02T08:00:00+07:00");
 
-const MUSIC_START_TIME = 52; // Detik dimulainya reff (Janji Suci)
+const MUSIC_START_TIME = 0; // Mulai dari awal untuk musik gamelan manten
 
 function InvitationPage() {
   const { to } = Route.useSearch();
@@ -135,7 +135,7 @@ function InvitationPage() {
         preload="auto"
         playsInline
         {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as Record<string, string>)}
-        src={janjiSuciAudio}
+        src={backgroundMusic}
       />
       <Cover opened={opened} onOpen={handleOpen} guestName={guestName} />
       {opened && (
