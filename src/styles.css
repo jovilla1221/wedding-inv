@@ -874,3 +874,19 @@
     }
   }
 }
+
+/* Wayang puppet animation */
+@keyframes wayang-sway {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(2deg) translateY(-4px);
+  }
+  50% {
+    transform: rotate(-1.5deg) translateY(-2px);
+  }
+  75% {
+    transform: rotate(1deg) translateY(-6px);
+  }
+}

@@ -43,6 +43,11 @@ import groomImg from "@/assets/pengantin pria.png";
 import rsvpBgNew from "@/assets/rsvp_bg_new.png";
 import bgThankYouLandscape from "@/assets/bg thank  you.png";
 import bgThankYouPortrait from "@/assets/bg_thank_you_portrait.png";
+import floralCorner from "@/assets/floral-corner.png";
+import islamicPatternBg from "@/assets/islamic-pattern-bg.png";
+import wayangLeft from "@/assets/wayang-left.png";
+import wayangRight from "@/assets/wayang-right.png";
+import goldMandala from "@/assets/gold-mandala.png";
 import { supabase } from "@/lib/supabase";
 import backgroundMusic from "@/assets/Gending Manten Adat Jawa Kebo Giro.mp3";
 
@@ -608,6 +613,57 @@ function RSVPSection() {
   );
 }
 
+/* ============== BANK LOGOS (Inline SVG) ============== */
+function BCALogo({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 40" className={className} xmlns="http://www.w3.org/2000/svg">
+      <rect rx="4" width="120" height="40" fill="#003d79"/>
+      <g fill="#fff">
+        <circle cx="18" cy="20" r="8" fill="none" stroke="#fff" strokeWidth="1.5"/>
+        <path d="M14,16 L22,16 L22,24 L14,24 Z" fill="none" stroke="#fff" strokeWidth="1"/>
+        <text x="15" y="23" fontSize="8" fontWeight="bold" fontFamily="Arial" fill="#fff">$</text>
+      </g>
+      <text x="35" y="27" fontSize="18" fontWeight="bold" fontFamily="Arial" fill="#fff">BCA</text>
+    </svg>
+  );
+}
+
+function MandiriLogo({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 40" className={className} xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M8,12 C8,12 14,8 20,12 C26,8 32,12 32,12 L32,28 C32,28 26,32 20,28 C14,32 8,28 8,28 Z" fill="#003d79"/>
+        <path d="M14,16 L20,20 L26,16" fill="none" stroke="#ffc72c" strokeWidth="2"/>
+        <path d="M14,22 L20,26 L26,22" fill="none" stroke="#ffc72c" strokeWidth="2"/>
+      </g>
+      <text x="38" y="28" fontSize="16" fontWeight="bold" fontFamily="Arial">
+        <tspan fill="#003d79">mandiri</tspan>
+      </text>
+    </svg>
+  );
+}
+
+function SeaBankLogo({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 40" className={className} xmlns="http://www.w3.org/2000/svg">
+      <rect rx="4" width="160" height="40" fill="#00A6E5"/>
+      <text x="12" y="28" fontSize="18" fontWeight="bold" fontFamily="Arial" fill="#fff">Sea</text>
+      <text x="52" y="28" fontSize="18" fontWeight="bold" fontFamily="Arial" fill="#fff">Bank</text>
+      <path d="M145,10 Q150,20 145,30" fill="none" stroke="#fff" strokeWidth="2" opacity="0.5"/>
+      <path d="M140,12 Q146,20 140,28" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.3"/>
+    </svg>
+  );
+}
+
+function getBankLogo(bank: string) {
+  switch (bank) {
+    case "BCA": return <BCALogo className="h-8 w-auto" />;
+    case "Mandiri": return <MandiriLogo className="h-8 w-auto" />;
+    case "SeaBank": return <SeaBankLogo className="h-8 w-auto" />;
+    default: return null;
+  }
+}
+
 /* ============== WISHES ============== */
 type Wish = { id: string; name: string; message: string; created_at: string };
 function WishesSection() {
@@ -642,40 +698,88 @@ function WishesSection() {
     toast.success("Doa dan ucapanmu telah terkirim 🌸");
     fetchWishes();
   };
+
   return (
-    <section className="section-pad bg-gradient-to-b from-ivory to-muted/40">
-      <FadeInSection className="max-w-3xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">Doa & Restu</p>
-        <h2 className="font-serif text-4xl sm:text-5xl text-navy">Wedding Wishes</h2>
+    <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: "linear-gradient(180deg, #f7f0e3 0%, #efe6d5 50%, #f0e8d8 100%)" }}>
+      {/* Islamic Arch Top Border */}
+      <div className="absolute top-0 left-0 right-0 h-16 sm:h-24">
+        <svg viewBox="0 0 1440 96" preserveAspectRatio="none" className="w-full h-full">
+          <path d="M0,0 L0,60 Q360,96 720,60 Q1080,24 1440,60 L1440,0 Z" fill="#c9a96e" opacity="0.15"/>
+          <path d="M0,0 L0,50 Q360,86 720,50 Q1080,14 1440,50 L1440,0 Z" fill="#c9a96e" opacity="0.08"/>
+        </svg>
+      </div>
+
+      {/* Gunungan decorations (left & right) */}
+      <img src={gununganGold} alt="" className="absolute left-0 top-1/2 -translate-y-1/2 w-32 sm:w-48 opacity-15 pointer-events-none" />
+      <img src={gununganGold} alt="" className="absolute right-0 top-1/2 -translate-y-1/2 w-32 sm:w-48 opacity-15 pointer-events-none scale-x-[-1]" />
+
+      {/* Floral corners */}
+      <img src={floralCorner} alt="" className="absolute top-0 left-0 w-28 sm:w-40 opacity-60 pointer-events-none" />
+      <img src={floralCorner} alt="" className="absolute top-0 right-0 w-28 sm:w-40 opacity-60 pointer-events-none scale-x-[-1]" />
+      <img src={floralCorner} alt="" className="absolute bottom-0 left-0 w-28 sm:w-40 opacity-60 pointer-events-none rotate-180 scale-x-[-1]" />
+      <img src={floralCorner} alt="" className="absolute bottom-0 right-0 w-28 sm:w-40 opacity-60 pointer-events-none rotate-180" />
+
+      <FadeInSection className="relative z-10 max-w-3xl mx-auto text-center px-4">
+        {/* Header */}
+        <p className="font-script text-gold text-2xl sm:text-3xl">✦ Doa & Restu ✦</p>
+        <h2 className="font-serif text-4xl sm:text-5xl text-navy mt-1">Wedding Wishes</h2>
+        <p className="text-muted-foreground mt-3 italic text-sm sm:text-base">Sampaikan doa dan harapan terbaik untuk kami</p>
         <Divider />
+
+        {/* Form Card with Gold Border */}
         <form
           onSubmit={submit}
-          className="mt-6 ornament-frame rounded-sm p-6 sm:p-8 text-left space-y-4"
+          className="mt-6 relative rounded-md p-6 sm:p-8 text-left space-y-4"
+          style={{
+            background: "rgba(255,255,255,0.85)",
+            border: "2px solid #c9a96e",
+            boxShadow: "0 0 0 4px rgba(201,169,110,0.12), 0 8px 32px rgba(0,0,0,0.06)",
+          }}
         >
-          <Input placeholder="Nama Anda" value={name} onChange={(e) => setName(e.target.value)} />
-          <Textarea
-            placeholder="Tulis ucapan & doa..."
-            rows={3}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
+          {/* Gold corner accents */}
+          <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-gold rounded-tl-sm" />
+          <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-gold rounded-tr-sm" />
+          <span className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-gold rounded-bl-sm" />
+          <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-gold rounded-br-sm" />
+
+          <div className="flex items-center gap-2">
+            <Sparkles size={16} className="text-gold shrink-0" />
+            <Input
+              placeholder="Nama Anda"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border-gold/30 focus:border-gold bg-white/60"
+            />
+          </div>
+          <div className="flex items-start gap-2">
+            <Sparkles size={16} className="text-gold shrink-0 mt-3" />
+            <Textarea
+              placeholder="Tulis ucapan & doa..."
+              rows={3}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="border-gold/30 focus:border-gold bg-white/60"
+            />
+          </div>
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-navy text-ivory hover:bg-navy-deep rounded-full"
+            className="w-full bg-navy text-ivory hover:bg-navy/90 rounded-full py-5"
           >
-            {isSubmitting ? "Mengirim..." : <><HandHeart size={14} className="mr-2" /> Send Wishes</>}
+            {isSubmitting ? "Mengirim..." : <><Sparkles size={14} className="mr-2" /> Kirim Doa & Ucapan</>}
           </Button>
         </form>
 
+        {/* Wishes List */}
         <div className="mt-10 space-y-4 max-h-[420px] overflow-y-auto pr-1 text-left">
           {wishes.map((w) => (
             <div
               key={w.id}
-              className="rounded-md border border-gold/30 bg-card p-5 animate-[fade-up_0.6s_ease-out_both]"
+              className="rounded-md p-5 animate-[fade-up_0.6s_ease-out_both]"
+              style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(201,169,110,0.25)" }}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-blush flex items-center justify-center text-ivory font-serif">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-blush flex items-center justify-center text-ivory font-serif text-sm">
                   {w.name[0]}
                 </div>
                 <div>
@@ -692,14 +796,20 @@ function WishesSection() {
           ))}
         </div>
       </FadeInSection>
+
+      {/* Gold ornament separator at bottom */}
+      <div className="flex justify-center mt-10">
+        <img src={goldMandala} alt="" className="w-12 h-12 opacity-60" />
+      </div>
     </section>
   );
 }
 
-/* ============== GIFT ============== */
+/* ============== GIFT / E-ANGPAO ============== */
 const ACCOUNTS = [
   { bank: "BCA", number: "1234567890", name: "Naufal" },
   { bank: "Mandiri", number: "9876543210", name: "Erika" },
+  { bank: "SeaBank", number: "9012345678", name: "Naufal" },
 ];
 
 function GiftSection() {
@@ -716,37 +826,70 @@ function GiftSection() {
   };
 
   return (
-    <section id="gift" className="section-pad batik-bg">
-      <FadeInSection className="max-w-4xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">Send a Gift</p>
-        <h2 className="font-serif text-4xl sm:text-5xl text-navy">E-Angpao</h2>
+    <section id="gift" className="relative overflow-hidden py-16 sm:py-20" style={{ background: "linear-gradient(180deg, #f0e8d8 0%, #ebe2d0 50%, #f0e8d8 100%)" }}>
+      {/* Batik pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ backgroundImage: `url(${islamicPatternBg})`, backgroundSize: "300px", backgroundRepeat: "repeat" }} />
+
+      {/* Animated Wayang Left */}
+      <div className="absolute left-0 bottom-0 w-28 sm:w-44 pointer-events-none" style={{ animation: "wayang-sway 4s ease-in-out infinite" }}>
+        <img src={wayangLeft} alt="" className="w-full opacity-70" />
+      </div>
+
+      {/* Animated Wayang Right */}
+      <div className="absolute right-0 bottom-0 w-28 sm:w-44 pointer-events-none" style={{ animation: "wayang-sway 4s ease-in-out infinite 0.5s" }}>
+        <img src={wayangRight} alt="" className="w-full opacity-70" />
+      </div>
+
+      <FadeInSection className="relative z-10 max-w-4xl mx-auto text-center px-4">
+        {/* Header */}
+        <p className="font-script text-gold text-2xl sm:text-3xl">✦ Tanda Kasih ✦</p>
+        <h2 className="font-serif text-4xl sm:text-5xl text-navy mt-1">E-Angpao</h2>
         <Divider />
-        <p className="text-muted-foreground max-w-xl mx-auto italic">
-          Doa restu Anda adalah hadiah terindah. Namun, jika berkenan memberikan tanda kasih, kami
-          menyediakan opsi digital berikut.
+        <p className="text-muted-foreground max-w-xl mx-auto italic text-sm sm:text-base">
+          Doa restu Anda adalah hadiah terindah.<br />
+          Namun, jika berkenan memberikan tanda kasih,<br />
+          kami menyediakan opsi digital berikut.
         </p>
 
-        <div className="mt-10 grid sm:grid-cols-2 gap-6">
+        {/* Bank Cards Grid */}
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ACCOUNTS.map((a) => (
-            <div key={a.number} className="ornament-frame rounded-sm p-6 text-left">
-              <div className="text-xs uppercase tracking-widest text-gold">{a.bank}</div>
-              <div className="font-serif text-2xl text-navy mt-1">{a.number}</div>
-              <div className="text-sm text-muted-foreground">a.n. {a.name}</div>
+            <div
+              key={a.number}
+              className="relative rounded-md p-6 text-left overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(247,240,227,0.95) 100%)",
+                border: "2px solid #c9a96e",
+                boxShadow: "0 0 0 3px rgba(201,169,110,0.1), 0 4px 20px rgba(0,0,0,0.05)",
+              }}
+            >
+              {/* Gold corner accents */}
+              <span className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-gold" />
+              <span className="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-gold" />
+              <span className="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-gold" />
+              <span className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-gold" />
+
+              {/* Gold mandala decoration */}
+              <img src={goldMandala} alt="" className="absolute top-3 right-3 w-14 h-14 opacity-20 pointer-events-none" />
+
+              {/* Bank Logo */}
+              <div className="mb-3">{getBankLogo(a.bank)}</div>
+
+              {/* Account Details */}
+              <div className="font-serif text-xl sm:text-2xl text-navy tracking-wider mt-2">
+                {a.number.replace(/(\d{4})/g, "$1 ").trim()}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">a.n. <span className="font-semibold text-navy/80">{a.name}</span></div>
+
+              {/* Copy Button */}
               <Button
                 onClick={() => copy(a.number)}
-                size="sm"
-                className="mt-4 bg-navy text-ivory hover:bg-navy-deep rounded-full"
+                className="w-full mt-4 bg-navy text-ivory hover:bg-navy/90 rounded-full py-4 text-xs tracking-wide"
               >
                 {copied === a.number ? (
-                  <>
-                    <Check size={14} className="mr-2" />
-                    Copied
-                  </>
+                  <><Check size={14} className="mr-2" /> Tersalin!</>
                 ) : (
-                  <>
-                    <Copy size={14} className="mr-2" />
-                    Copy Account Number
-                  </>
+                  <><Copy size={14} className="mr-2" /> Salin Nomor Rekening</>
                 )}
               </Button>
             </div>
