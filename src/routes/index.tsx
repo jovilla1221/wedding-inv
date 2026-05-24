@@ -396,7 +396,7 @@ function CoupleSection() {
 
         <div className="mt-14 grid sm:grid-cols-2 gap-10">
           <ProfileCard
-            name="Muhammad Naufal Amru"
+            name="Mohammad Naufal Amru"
             parents="Putra dari Bpk Moh. Shohibul Huda (Alm.) & Ibu Yahdi Elfina Yuliyati"
             initials="N"
           />
