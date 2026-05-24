@@ -76,8 +76,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Naufal & Erika — A Wedding Invitation Experience" },
       {
         name: "description",
-        content:
-          "Naufal & Erika — an elegant Indonesian wedding invitation. Selasa, 02 Juni 2026.",
+        content: "Naufal & Erika — an elegant Indonesian wedding invitation. Selasa, 02 Juni 2026.",
       },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Naufal & Erika — Wedding Invitation" },

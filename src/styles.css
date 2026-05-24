@@ -303,7 +303,8 @@
    COUPLE SECTION — Malay-Islamic Decorative Animations
    ========================================================================= */
 @keyframes lantern-glow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 8px rgba(199, 154, 53, 0.3)) brightness(1);
     transform: translateY(0);
   }
@@ -313,7 +314,8 @@
   }
 }
 @keyframes gentle-sway {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg) translateX(0);
   }
   25% {
@@ -324,7 +326,8 @@
   }
 }
 @keyframes gentle-sway-reverse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scaleX(-1) rotate(0deg) translateX(0);
   }
   25% {
@@ -352,7 +355,8 @@
   }
 }
 @keyframes sparkle-twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
     transform: scale(0) rotate(0deg);
   }
@@ -370,7 +374,8 @@
   }
 }
 @keyframes arch-breathe {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.12;
     transform: translateX(-50%) scale(1);
   }
@@ -561,27 +566,27 @@
   .couple-section-bg {
     position: relative;
     overflow: hidden;
-    background:
-      linear-gradient(180deg,
-        #fbf8ec 0%,
-        #f7f0da 15%,
-        #f3ead0 40%,
-        #efe3c4 65%,
-        #f5edda 85%,
-        #fbf8ec 100%
-      );
+    background: linear-gradient(
+      180deg,
+      #fbf8ec 0%,
+      #f7f0da 15%,
+      #f3ead0 40%,
+      #efe3c4 65%,
+      #f5edda 85%,
+      #fbf8ec 100%
+    );
   }
   @supports (color: oklch(0.7 0.1 80)) {
     .couple-section-bg {
-      background:
-        linear-gradient(180deg,
-          oklch(0.975 0.012 85) 0%,
-          oklch(0.955 0.025 85) 15%,
-          oklch(0.94 0.032 82) 40%,
-          oklch(0.93 0.038 80) 65%,
-          oklch(0.95 0.02 85) 85%,
-          oklch(0.975 0.012 85) 100%
-        );
+      background: linear-gradient(
+        180deg,
+        oklch(0.975 0.012 85) 0%,
+        oklch(0.955 0.025 85) 15%,
+        oklch(0.94 0.032 82) 40%,
+        oklch(0.93 0.038 80) 65%,
+        oklch(0.95 0.02 85) 85%,
+        oklch(0.975 0.012 85) 100%
+      );
     }
   }
 
@@ -657,8 +662,8 @@
   }
 
   .couple-mosque-silhouette {
-    mask-image: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 70%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 70%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.15) 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.15) 0%, transparent 70%);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -873,20 +878,55 @@
       top: -8.5rem;
     }
   }
-}
 
-/* Wayang puppet animation */
-@keyframes wayang-sway {
-  0%, 100% {
-    transform: rotate(0deg) translateY(0);
+  /* Wayang puppet realistic animation (dalang movement) */
+  @keyframes wayang-puppet-move {
+    0% {
+      transform: rotate(0deg) translateY(0px) scale(1);
+      transform-origin: bottom center;
+    }
+    20% {
+      transform: rotate(3deg) translateY(-8px) scale(1.02);
+      transform-origin: bottom center;
+    }
+    40% {
+      transform: rotate(-2deg) translateY(-2px) scale(0.98);
+      transform-origin: bottom center;
+    }
+    60% {
+      transform: rotate(4deg) translateY(-12px) scale(1.03);
+      transform-origin: bottom center;
+    }
+    80% {
+      transform: rotate(-1deg) translateY(-4px) scale(0.99);
+      transform-origin: bottom center;
+    }
+    100% {
+      transform: rotate(0deg) translateY(0px) scale(1);
+      transform-origin: bottom center;
+    }
   }
-  25% {
-    transform: rotate(2deg) translateY(-4px);
-  }
-  50% {
-    transform: rotate(-1.5deg) translateY(-2px);
-  }
-  75% {
-    transform: rotate(1deg) translateY(-6px);
+
+  @keyframes wayang-puppet-move-alt {
+    0% {
+      transform: rotate(0deg) translateY(0px) scale(1);
+      transform-origin: bottom center;
+    }
+    25% {
+      transform: rotate(-3deg) translateY(-10px) scale(1.02);
+      transform-origin: bottom center;
+    }
+    50% {
+      transform: rotate(2deg) translateY(-3px) scale(0.99);
+      transform-origin: bottom center;
+    }
+    75% {
+      transform: rotate(-4deg) translateY(-15px) scale(1.04);
+      transform-origin: bottom center;
+    }
+    100% {
+      transform: rotate(0deg) translateY(0px) scale(1);
+      transform-origin: bottom center;
+    }
   }
 }
