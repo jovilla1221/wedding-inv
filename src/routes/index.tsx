@@ -42,9 +42,6 @@ import groomImg from "@/assets/pengantin pria.png";
 import rsvpBgNew from "@/assets/rsvp_bg_new.png";
 import bgThankYouLandscape from "@/assets/bg thank  you.png";
 import bgThankYouPortrait from "@/assets/bg_thank_you_portrait.png";
-import batikNavyGold from "@/assets/batik_navy_gold.png";
-import gununganGoldNew from "@/assets/gunungan_gold.png";
-import jasmineOrnament from "@/assets/jasmine_ornament.png";
 import goldMandala from "@/assets/gold-mandala.png";
 import cakraJawa from "@/assets/cakra_jawa.png";
 import islamicPatternBg from "@/assets/islamic-pattern-bg.png";
@@ -376,41 +373,23 @@ function CoupleSection() {
   return (
     <section
       id="couple"
-      className="section-pad relative overflow-hidden bg-[#070b19]"
+      className="section-pad bg-gradient-to-b from-ivory to-muted/60 relative overflow-hidden"
     >
-      {/* Background with new Batik pattern */}
-      <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-repeat opacity-[0.15] mix-blend-screen"
-          style={{ backgroundImage: `url(${batikNavyGold})`, backgroundSize: "300px" }}
-        />
-        {/* Soft golden glow in the center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(199,154,53,0.12)_0%,_transparent_70%)]" />
-      </div>
+      {/* Left side decoration frame */}
+      <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
+      <div className="absolute left-6 top-8 w-6 h-6 border-t border-l border-gold/50 rounded-tl-sm hidden xl:block pointer-events-none" />
+      <div className="absolute left-6 bottom-8 w-6 h-6 border-b border-l border-gold/50 rounded-bl-sm hidden xl:block pointer-events-none" />
 
-      {/* Decorative Gunungan at top and bottom */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-[500px] opacity-25 mix-blend-screen z-0 pointer-events-none">
-        <img src={gununganGoldNew} alt="" className="w-full h-full object-contain" />
-      </div>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-[500px] opacity-25 mix-blend-screen z-0 pointer-events-none rotate-180">
-        <img src={gununganGoldNew} alt="" className="w-full h-full object-contain" />
-      </div>
-      
-      {/* Jasmine Ornaments at corners */}
-      <div className="absolute top-0 left-0 w-36 sm:w-56 opacity-80 mix-blend-screen pointer-events-none z-10">
-        <img src={jasmineOrnament} alt="" className="w-full h-full object-contain drop-shadow-2xl" />
-      </div>
-      <div className="absolute top-0 right-0 w-36 sm:w-56 opacity-80 mix-blend-screen pointer-events-none z-10 scale-x-[-1]">
-        <img src={jasmineOrnament} alt="" className="w-full h-full object-contain drop-shadow-2xl" />
-      </div>
+      {/* Right side decoration frame */}
+      <div className="absolute right-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
+      <div className="absolute right-6 top-8 w-6 h-6 border-t border-r border-gold/50 rounded-tr-sm hidden xl:block pointer-events-none" />
+      <div className="absolute right-6 bottom-8 w-6 h-6 border-b border-r border-gold/50 rounded-br-sm hidden xl:block pointer-events-none" />
 
-      <FadeInSection className="max-w-4xl mx-auto text-center relative z-10">
-        <p className="font-script text-gold text-3xl sm:text-4xl drop-shadow-md">The Beloved</p>
-        <h2 className="font-serif text-4xl sm:text-5xl text-ivory mt-2 font-semibold tracking-wide">Bride &amp; Groom</h2>
-        <div className="my-6">
-          <Divider />
-        </div>
-        <p className="text-ivory/80 max-w-xl mx-auto text-sm sm:text-base leading-relaxed italic">
+      <FadeInSection className="max-w-4xl mx-auto text-center">
+        <p className="font-script text-gold text-3xl">The Beloved</p>
+        <h2 className="font-serif text-4xl sm:text-5xl text-navy mt-1">Bride &amp; Groom</h2>
+        <Divider />
+        <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base leading-relaxed italic">
           Dengan penuh rasa syukur dan bahagia, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan
           memberikan doa restu pada hari bahagia kami.
         </p>
@@ -443,24 +422,15 @@ function ProfileCard({
 }) {
   const isGroom = initials === "N";
   return (
-    <div className="relative rounded-lg p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both] bg-[#111930]/60 backdrop-blur-md border border-gold/30 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
-      {/* Inner fine border */}
-      <div className="absolute inset-2 border border-gold/15 pointer-events-none rounded-md" />
-      
-      {/* Corner accents */}
-      <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-gold/50 pointer-events-none" />
-      <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-gold/50 pointer-events-none" />
-      <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-gold/50 pointer-events-none" />
-      <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-gold/50 pointer-events-none" />
-
+    <div className="ornament-frame rounded-sm p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both]">
       <OvalFrame 
         src={isGroom ? groomImg : brideImg} 
         alt={name} 
         size="md" 
         imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""} 
       />
-      <h3 className="mt-8 font-serif text-3xl text-gold">{name}</h3>
-      <p className="mt-3 text-sm text-ivory/80 italic max-w-xs">{parents}</p>
+      <h3 className="mt-8 font-serif text-3xl text-navy">{name}</h3>
+      <p className="mt-2 text-sm text-muted-foreground italic max-w-xs">{parents}</p>
     </div>
   );
 }
