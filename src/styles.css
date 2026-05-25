@@ -47,7 +47,7 @@
 :root {
   --radius: 0.625rem;
 
-  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-serif: "Lora", "Merriweather", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-script: "Pinyon Script", cursive;
 
