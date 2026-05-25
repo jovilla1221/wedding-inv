@@ -38,6 +38,7 @@
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
   --font-script: var(--font-script);
+  --font-amita: var(--font-amita);
   --animate-fade-in: fade-in 1s ease-out both;
   --animate-fade-up: fade-up 1.1s ease-out both;
   --animate-shimmer: shimmer 3s linear infinite;
@@ -50,6 +51,7 @@
   --font-serif: "Lora", "Merriweather", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-script: "Pinyon Script", cursive;
+  --font-amita: "Amita", cursive;
 
   /* Hex fallbacks keep older Safari readable before modern color values apply. */
   --ivory: #fbf8ec;
@@ -451,6 +453,9 @@
   }
   .font-script {
     font-family: var(--font-script);
+  }
+  .font-amita {
+    font-family: var(--font-amita);
   }
   .font-serif {
     font-family: var(--font-serif);

@@ -39,6 +39,18 @@ import coupleHero from "@/assets/pengantin  both.png";
 import gununganGold from "@/assets/gunungan-gold.png";
 import brideImg from "@/assets/pengantin wanita.png";
 import groomImg from "@/assets/pengantin pria.png";
+import luxuryParchment from "@/assets/luxury_parchment.png";
+import faintGunungan from "@/assets/faint_gunungan.png";
+import faintWayang from "@/assets/faint_wayang.png";
+import subtleBatik from "@/assets/subtle_batik.png";
+import jasmineLeft from "@/assets/jasmine_left.png";
+import jasmineRight from "@/assets/jasmine_right.png";
+import goldCorner from "@/assets/gold_corner.png";
+import goldDivider from "@/assets/gold_divider.png";
+import cardCrown from "@/assets/card_crown.png";
+import cardGunungan from "@/assets/card_gunungan.png";
+import cardFloral from "@/assets/card_floral.png";
+import cardCornerDecor from "@/assets/card_corner.png";
 import rsvpBgNew from "@/assets/rsvp_bg_new.png";
 import bgThankYouLandscape from "@/assets/bg thank  you.png";
 import bgThankYouPortrait from "@/assets/bg_thank_you_portrait.png";
@@ -149,8 +161,48 @@ function InvitationPage() {
       {opened && (
         <main className="animate-[fade-in_1.4s_ease-out_both]">
           <HeroSection />
-          <CoupleSection />
-          <EventSection />
+          
+          {/* Continuous Background Wrapper for Couple and Event Section */}
+          <div 
+            className="relative w-full overflow-hidden bg-[#FDFBF7]"
+            style={{
+              backgroundImage: `url(${luxuryParchment}), url(${subtleBatik})`,
+              backgroundSize: "cover, 300px",
+              backgroundPosition: "center top, top left",
+              backgroundRepeat: "no-repeat, repeat",
+            }}
+          >
+            {/* Soft Radial Light */}
+            <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[800px] h-[800px] bg-[#FFF8E7] rounded-full blur-[120px] opacity-70" />
+            </div>
+
+            {/* Inner gold border spanning both sections */}
+            <div className="absolute inset-x-4 sm:inset-x-8 top-4 sm:top-8 bottom-4 sm:bottom-8 border border-[#D4AF37]/30 z-10 pointer-events-none rounded-xl" />
+            
+            {/* Top gold corners */}
+            <img src={goldCorner} alt="" className="absolute top-4 sm:top-8 left-4 sm:left-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none" />
+            <img src={goldCorner} alt="" className="absolute top-4 sm:top-8 right-4 sm:right-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-x-[-1]" />
+            
+            {/* Bottom gold corners */}
+            <img src={goldCorner} alt="" className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-y-[-1]" />
+            <img src={goldCorner} alt="" className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-[-1]" />
+
+            {/* Faint watermark/silhouettes */}
+            <img src={faintGunungan} alt="" className="absolute left-[-5%] sm:left-[-10%] top-1/4 -translate-y-1/2 w-[400px] sm:w-[600px] object-contain opacity-[0.05] mix-blend-multiply pointer-events-none z-0" />
+            <img src={faintWayang} alt="" className="absolute right-[-5%] sm:right-[-10%] bottom-1/4 translate-y-1/2 w-[350px] sm:w-[500px] object-contain opacity-[0.05] mix-blend-multiply pointer-events-none z-0 scale-x-[-1]" />
+
+            {/* Jasmine flowers at the very bottom of the entire combined sections */}
+            <img src={jasmineLeft} alt="" className="absolute bottom-0 left-0 w-[200px] sm:w-[350px] object-contain opacity-90 mix-blend-multiply pointer-events-none z-20" />
+            <img src={jasmineRight} alt="" className="absolute bottom-0 right-0 w-[200px] sm:w-[350px] object-contain opacity-90 mix-blend-multiply pointer-events-none z-20" />
+
+            <div className="relative z-10">
+              <ArRumSection />
+              <CoupleSection />
+              <EventSection />
+            </div>
+          </div>
+
           <RSVPSection />
           
           {/* Continuous Background Wrapper for Wishes and E-Angpao */}
@@ -313,10 +365,10 @@ function HeroSection() {
           className="mx-auto w-20 sm:w-28 mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] animate-[float_6s_ease-in-out_infinite]"
           loading="lazy"
         />
-        <p className="font-script text-gold text-3xl sm:text-4xl">Our Wedding Day</p>
+        <p className="font-amita font-bold text-[#8F7036] text-3xl sm:text-4xl drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">Our Wedding Day</p>
         <h2 className="hero-title mt-2 font-serif text-navy">Naufal &amp; Erika</h2>
         <Divider />
-        <p className="text-navy font-serif text-xl">Selasa, 02 Juni 2026</p>
+        <p className="text-navy font-serif text-2xl font-bold">Selasa, 02 Juni 2026</p>
 
         <div className="countdown-grid mt-10 grid gap-2 sm:gap-4 max-w-md mx-auto">
           {[
@@ -368,42 +420,55 @@ function useCountdown(date: Date) {
   return { days, hours, minutes, seconds };
 }
 
+/* ============== AR-RUM 21 ============== */
+function ArRumSection() {
+  return (
+    <section className="relative w-full pt-16 sm:pt-20 pb-8 flex justify-center items-center bg-transparent">
+      <FadeInSection className="relative z-20 max-w-3xl mx-auto text-center px-6">
+        <p className="text-[#3A4B5F] text-sm sm:text-base leading-relaxed italic font-light drop-shadow-sm font-serif">
+          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
+        </p>
+        <p className="mt-4 text-[#1A2C42] font-semibold text-sm tracking-widest uppercase">
+          ( QS. Ar-Rum: 21 )
+        </p>
+      </FadeInSection>
+    </section>
+  );
+}
+
 /* ============== COUPLE ============== */
 function CoupleSection() {
   return (
     <section
       id="couple"
-      className="section-pad bg-gradient-to-b from-ivory to-muted/60 relative overflow-hidden"
+      className="relative w-full pt-20 pb-12 sm:pt-28 sm:pb-16 flex justify-center items-center bg-transparent"
     >
-      {/* Left side decoration frame */}
-      <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
-      <div className="absolute left-6 top-8 w-6 h-6 border-t border-l border-gold/50 rounded-tl-sm hidden xl:block pointer-events-none" />
-      <div className="absolute left-6 bottom-8 w-6 h-6 border-b border-l border-gold/50 rounded-bl-sm hidden xl:block pointer-events-none" />
+      {/* Main Content */}
+      <FadeInSection className="relative z-20 max-w-5xl mx-auto text-center px-4 w-full">
+        <p className="font-amita font-bold text-[#8F7036] text-4xl sm:text-5xl mb-2 drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">The Beloved</p>
+        <h2 className="font-serif text-5xl sm:text-6xl text-[#1A2C42] mt-1 tracking-wide">Bride &amp; Groom</h2>
+        
+        <div className="flex justify-center mt-4 mb-1">
+          <img src={cakraJawa} alt="cakra divider" className="w-24 sm:w-32 opacity-90 mix-blend-multiply" />
+        </div>
 
-      {/* Right side decoration frame */}
-      <div className="absolute right-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
-      <div className="absolute right-6 top-8 w-6 h-6 border-t border-r border-gold/50 rounded-tr-sm hidden xl:block pointer-events-none" />
-      <div className="absolute right-6 bottom-8 w-6 h-6 border-b border-r border-gold/50 rounded-br-sm hidden xl:block pointer-events-none" />
-
-      <FadeInSection className="max-w-4xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">The Beloved</p>
-        <h2 className="font-serif text-4xl sm:text-5xl text-navy mt-1">Bride &amp; Groom</h2>
-        <Divider />
-        <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base leading-relaxed italic">
+        <p className="text-[#3A4B5F] max-w-2xl mx-auto text-base sm:text-lg leading-relaxed italic font-light drop-shadow-sm mb-16">
           Dengan penuh rasa syukur dan bahagia, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan
           memberikan doa restu pada hari bahagia kami.
         </p>
 
-        <div className="mt-14 grid sm:grid-cols-2 gap-10">
+        <div className="grid sm:grid-cols-2 gap-8 sm:gap-16">
           <ProfileCard
             name="Mohammad Naufal Amru"
             parents="Putra dari Bpk Moh. Shohibul Huda (Alm.) & Ibu Yahdi Elfina Yuliyati"
             initials="N"
+            instagram="@naufal.amru"
           />
           <ProfileCard
-            name="Erika Putri Rahmahwati "
+            name="Erika Putri Rahmahwati"
             parents="Putri dari Bpk. Baroji & Ibu Sunarwati"
             initials="E"
+            instagram="@ceerika_"
           />
         </div>
       </FadeInSection>
@@ -415,22 +480,65 @@ function ProfileCard({
   name,
   parents,
   initials,
+  instagram,
 }: {
   name: string;
   parents: string;
   initials: string;
+  instagram?: string;
 }) {
   const isGroom = initials === "N";
   return (
-    <div className="ornament-frame rounded-sm p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both]">
-      <OvalFrame 
-        src={isGroom ? groomImg : brideImg} 
-        alt={name} 
-        size="md" 
-        imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""} 
-      />
-      <h3 className="mt-8 font-serif text-3xl text-navy">{name}</h3>
-      <p className="mt-2 text-sm text-muted-foreground italic max-w-xs">{parents}</p>
+    <div className="relative rounded-[2rem] p-8 sm:p-10 flex flex-col items-center animate-[fade-up_1s_ease-out_both] bg-gradient-to-b from-[#FFFDF9]/95 to-[#F9F5EC]/95 backdrop-blur-md border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.1),inset_0_1px_5px_rgba(255,255,255,0.8)] transition-transform duration-500 hover:-translate-y-2 group overflow-hidden">
+      
+      {/* Subtle corner decors */}
+      <img src={cardCornerDecor} alt="" className="absolute top-3 left-3 w-10 mix-blend-multiply opacity-60 pointer-events-none" />
+      <img src={cardCornerDecor} alt="" className="absolute top-3 right-3 w-10 mix-blend-multiply opacity-60 pointer-events-none scale-x-[-1]" />
+      <img src={cardCornerDecor} alt="" className="absolute bottom-3 left-3 w-10 mix-blend-multiply opacity-60 pointer-events-none scale-y-[-1]" />
+      <img src={cardCornerDecor} alt="" className="absolute bottom-3 right-3 w-10 mix-blend-multiply opacity-60 pointer-events-none scale-[-1]" />
+
+      {/* Inner fine border */}
+      <div className="absolute inset-4 border border-[#D4AF37]/30 rounded-3xl pointer-events-none" />
+      
+      {/* Top gunungan ornament */}
+      <img src={cardGunungan} alt="" className="w-12 sm:w-16 h-auto mb-4 opacity-85 mix-blend-multiply drop-shadow-sm" />
+
+      {/* Photo Frame (Arch / Oval) */}
+      <div className="relative p-1.5 rounded-full border border-[#D4AF37]/60 bg-white/70 shadow-[0_0_15px_rgba(212,175,55,0.15)] mb-4">
+        <OvalFrame 
+          src={isGroom ? groomImg : brideImg} 
+          alt={name} 
+          size="md" 
+          imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""} 
+        />
+      </div>
+
+      {/* Bottom floral carving ornament */}
+      <img src={cardFloral} alt="" className="w-20 sm:w-28 h-auto mb-6 opacity-75 mix-blend-multiply" />
+
+      {/* Typography: Name */}
+      <h3 className="font-serif text-2xl sm:text-3xl text-[#111928] tracking-wide text-center leading-snug drop-shadow-sm">{name}</h3>
+      
+      {/* Instagram Handle */}
+      {instagram && (
+        <a
+          href={`https://instagram.com/${instagram.replace("@", "")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 flex items-center gap-1 text-sm text-[#C5A059] hover:text-[#A78343] transition-colors font-sans tracking-wide"
+        >
+          <Instagram size={14} className="opacity-80" />
+          <span>{instagram}</span>
+        </a>
+      )}
+
+      {/* Gold Divider */}
+      <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-5" />
+      
+      {/* Typography: Parents */}
+      <p className="text-sm sm:text-base text-[#3A4B5F] italic text-center max-w-[260px] leading-relaxed font-light drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+        {parents}
+      </p>
     </div>
   );
 }
@@ -448,20 +556,10 @@ function EventSection() {
   return (
     <section
       id="event"
-      className="section-pad bg-gradient-to-b from-muted/40 to-ivory relative overflow-hidden"
+      className="relative w-full pb-20 pt-12 sm:pb-28 sm:pt-16 flex justify-center items-center bg-transparent"
     >
-      {/* Left side decoration frame */}
-      <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
-      <div className="absolute left-6 top-8 w-6 h-6 border-t border-l border-gold/50 rounded-tl-sm hidden xl:block pointer-events-none" />
-      <div className="absolute left-6 bottom-8 w-6 h-6 border-b border-l border-gold/50 rounded-bl-sm hidden xl:block pointer-events-none" />
-
-      {/* Right side decoration frame */}
-      <div className="absolute right-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-gold/45 to-transparent hidden xl:block pointer-events-none" />
-      <div className="absolute right-6 top-8 w-6 h-6 border-t border-r border-gold/50 rounded-tr-sm hidden xl:block pointer-events-none" />
-      <div className="absolute right-6 bottom-8 w-6 h-6 border-b border-r border-gold/50 rounded-br-sm hidden xl:block pointer-events-none" />
-
-      <FadeInSection className="max-w-4xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">When & Where</p>
+      <FadeInSection className="max-w-4xl mx-auto text-center relative z-10">
+        <p className="font-amita font-bold text-[#8F7036] text-3xl drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">When & Where</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Lokasi &amp; Acara</h2>
         <Divider />
         <p className="text-muted-foreground max-w-xl mx-auto italic">
@@ -512,7 +610,7 @@ function EventSection() {
 
 /* ============== RSVP ============== */
 function RSVPSection() {
-  const [form, setForm] = useState({ name: "", attend: "attend", guests: "1", message: "" });
+  const [form, setForm] = useState({ name: "", attend: "attend" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
@@ -524,8 +622,8 @@ function RSVPSection() {
       {
         name: form.name,
         is_attending: form.attend === "attend",
-        guest_count: parseInt(form.guests) || 1,
-        message: form.message,
+        guest_count: 1,
+        message: "",
       },
     ]);
     setIsSubmitting(false);
@@ -536,9 +634,9 @@ function RSVPSection() {
     }
 
     toast.success("Terima kasih! Konfirmasi kehadiran Anda telah kami terima.", {
-      description: `${form.name} — ${form.attend === "attend" ? "Hadir" : "Tidak Hadir"} (${form.guests} tamu)`,
+      description: `${form.name} — ${form.attend === "attend" ? "Hadir" : "Tidak Hadir"}`,
     });
-    setForm({ name: "", attend: "attend", guests: "1", message: "" });
+    setForm({ name: "", attend: "attend" });
   };
   return (
     <section
@@ -613,29 +711,6 @@ function RSVPSection() {
                   </Label>
                 ))}
               </RadioGroup>
-            </div>
-            <div>
-              <Label className="text-ivory/80 text-xs tracking-widest uppercase">Jumlah Tamu</Label>
-              <Input
-                type="number"
-                min={1}
-                max={10}
-                value={form.guests}
-                onChange={(e) => setForm({ ...form, guests: e.target.value })}
-                className="mt-2 bg-ivory/5 border-gold/30 text-ivory focus-visible:ring-gold"
-              />
-            </div>
-            <div>
-              <Label className="text-ivory/80 text-xs tracking-widest uppercase">
-                Pesan / Ucapan
-              </Label>
-              <Textarea
-                rows={3}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="mt-2 bg-ivory/5 border-gold/30 text-ivory placeholder:text-ivory/40 focus-visible:ring-gold"
-                placeholder="Tulis ucapan atau pesan doa restu Anda di sini..."
-              />
             </div>
             <Button
               type="submit"
@@ -900,10 +975,10 @@ function WishesSection() {
           <span className="h-px w-10 bg-gold/60" />
         </div>
 
-        {/* Responsive Desktop Layout: side-by-side grid on lg, stack on mobile/tablet */}
-        <div className="grid lg:grid-cols-12 gap-8 mt-8 items-start">
+        {/* Centered Form Layout */}
+        <div className="max-w-xl mx-auto mt-8 items-start">
           {/* Form Card */}
-          <div className="lg:col-span-5 text-left">
+          <div className="text-left">
             <form
               onSubmit={submit}
               className="relative rounded-lg p-6 sm:p-8 text-left space-y-4 bg-white/95 border border-gold"
@@ -963,43 +1038,6 @@ function WishesSection() {
             </form>
           </div>
 
-          {/* Wishes List */}
-          <div className="lg:col-span-7">
-            <div className="space-y-4 max-h-[480px] lg:max-h-[500px] overflow-y-auto pr-2 text-left [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gold/35 [&::-webkit-scrollbar-thumb]:rounded-full">
-              {wishes.map((w) => (
-                <div
-                  key={w.id}
-                  className="relative rounded-lg p-5 animate-[fade-up_0.6s_ease-out_both] bg-white/90 border border-gold/25"
-                  style={{
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
-                  }}
-                >
-                  {/* Subtle inner double border */}
-                  <div className="absolute inset-1 border border-gold/10 pointer-events-none rounded-[6px]" />
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold/70 flex items-center justify-center text-white font-serif text-sm font-bold shadow-inner">
-                        {w.name?.[0] || "?"}
-                      </div>
-                      <div>
-                        <div className="font-serif text-navy font-semibold">{w.name}</div>
-                        <div className="text-xs text-navy/55">
-                          {new Date(w.created_at).toLocaleDateString("id-ID", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="mt-3 text-sm text-navy/85 leading-relaxed whitespace-pre-line">
-                      {w.message}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </FadeInSection>
 
@@ -1152,7 +1190,7 @@ function StreamingSection() {
   return (
     <section className="section-pad bg-gradient-to-b from-ivory to-muted/40">
       <FadeInSection className="max-w-2xl mx-auto text-center">
-        <p className="font-script text-gold text-3xl">Watch Live</p>
+        <p className="font-script text-[#8F7036] text-3xl drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">Watch Live</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Live Streaming</h2>
         <Divider />
         <p className="text-muted-foreground italic">
