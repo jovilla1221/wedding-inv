@@ -423,7 +423,12 @@ function ProfileCard({
   const isGroom = initials === "N";
   return (
     <div className="ornament-frame rounded-sm p-8 flex flex-col items-center animate-[fade-up_1s_ease-out_both]">
-      <OvalFrame src={isGroom ? groomImg : brideImg} alt={name} size="md" />
+      <OvalFrame 
+        src={isGroom ? groomImg : brideImg} 
+        alt={name} 
+        size="md" 
+        imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""} 
+      />
       <h3 className="mt-8 font-serif text-3xl text-navy">{name}</h3>
       <p className="mt-2 text-sm text-muted-foreground italic max-w-xs">{parents}</p>
     </div>
