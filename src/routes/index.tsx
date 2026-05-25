@@ -59,8 +59,6 @@ import cakraJawa from "@/assets/cakra_jawa.png";
 import islamicPatternBg from "@/assets/islamic-pattern-bg.png";
 import wayangLeft from "@/assets/wayang-left.png";
 import wayangRight from "@/assets/wayang-right.png";
-import mandiriLogoImg from "@/assets/Mandiri Sahabatku Original.png";
-import seabankLogoImg from "@/assets/seabanklogo.png";
 import bgWishesAngpaoDesktop from "@/assets/bg_wishes_angpao_desktop.png";
 import bgWishesAngpaoMobile from "@/assets/bg_wishes_angpao_mobile.png";
 import { supabase } from "@/lib/supabase";
@@ -547,9 +545,21 @@ function ProfileCard({
 function EventSection() {
   const events = [
     {
+      title: "Akad",
+      date: "Selasa, 2 Juni 2026",
+      time: "08.30 - 10.00 WIB",
+      address: "Ds. Gilang, Ngunut, Tulungagung Regency, East Java 66292",
+    },
+    {
+      title: "Walimatul ursy",
+      date: "Selasa, 2 Juni 2026",
+      time: "10.00 - 12.00 WIB",
+      address: "Ds. Gilang, Ngunut, Tulungagung Regency, East Java 66292",
+    },
+    {
       title: "Resepsi",
       date: "Selasa, 2 Juni 2026",
-      time: "13:00 - 18:00 WIB",
+      time: "13.00 - 18.00 WIB",
       address: "Ds. Gilang, Ngunut, Tulungagung Regency, East Java 66292",
     },
   ];
@@ -558,39 +568,41 @@ function EventSection() {
       id="event"
       className="relative w-full pb-20 pt-12 sm:pb-28 sm:pt-16 flex justify-center items-center bg-transparent"
     >
-      <FadeInSection className="max-w-4xl mx-auto text-center relative z-10">
+      <FadeInSection className="max-w-6xl mx-auto text-center relative z-10 w-full">
         <p className="font-amita font-bold text-[#8F7036] text-3xl drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">When & Where</p>
         <h2 className="font-serif text-4xl sm:text-5xl text-navy">Lokasi &amp; Acara</h2>
         <Divider />
-        <p className="text-muted-foreground max-w-xl mx-auto italic">
+        <p className="text-muted-foreground max-w-xl mx-auto italic px-4">
           Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.
         </p>
-        <div className="mt-12 max-w-md mx-auto">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
           {events.map((e) => (
             <div
               key={e.title}
-              className="ornament-frame rounded-sm p-8 text-center flex flex-col items-center"
+              className="ornament-frame rounded-sm p-6 sm:p-8 text-center flex flex-col justify-between items-center h-full min-h-[360px]"
             >
-              <h3 className="font-serif text-3xl text-navy">{e.title}</h3>
-              <Divider className="my-4" />
-              <div className="space-y-3 text-sm">
-                <div className="flex items-center justify-center gap-2 text-navy">
-                  <Calendar size={14} className="text-gold" />
-                  {e.date}
+              <div className="flex flex-col items-center w-full">
+                <h3 className="font-serif text-2xl sm:text-3xl text-navy">{e.title}</h3>
+                <Divider className="my-4" />
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-center gap-2 text-navy">
+                    <Calendar size={14} className="text-gold" />
+                    {e.date}
+                  </div>
+                  <div className="flex items-center justify-center gap-2 text-navy">
+                    <Clock size={14} className="text-gold" />
+                    {e.time}
+                  </div>
+                  <p className="flex items-start justify-center gap-2 text-muted-foreground text-xs max-w-xs mx-auto">
+                    <MapPin size={14} className="text-gold shrink-0 mt-0.5" />
+                    {e.address}
+                  </p>
                 </div>
-                <div className="flex items-center justify-center gap-2 text-navy">
-                  <Clock size={14} className="text-gold" />
-                  {e.time}
-                </div>
-                <p className="flex items-start justify-center gap-2 text-muted-foreground text-xs max-w-xs mx-auto">
-                  <MapPin size={14} className="text-gold shrink-0 mt-0.5" />
-                  {e.address}
-                </p>
               </div>
               <Button
                 asChild
                 variant="outline"
-                className="mt-6 border-gold text-navy hover:bg-gold hover:text-navy rounded-full"
+                className="mt-6 border-gold text-navy hover:bg-gold hover:text-navy rounded-full w-full max-w-[180px]"
               >
                 <a
                   href="https://maps.app.goo.gl/LN1oGyi7scf9B35EA?g_st=ac"
@@ -787,12 +799,10 @@ function SeaBankLogo({ className = "" }: { className?: string }) {
 
 function getBankLogo(bank: string) {
   switch (bank) {
+    case "BCA":
+      return <BCALogo className="h-8 w-auto object-contain" />;
     case "BRI":
       return <span className="font-bold text-2xl text-[#00529C] tracking-widest font-sans italic">BRI</span>;
-    case "Mandiri":
-      return <img src={mandiriLogoImg} alt="Mandiri" className="h-8 w-auto object-contain" />;
-    case "SeaBank":
-      return <img src={seabankLogoImg} alt="SeaBank" className="h-12 w-auto object-contain origin-left scale-110" />;
     default:
       return null;
   }
@@ -1050,8 +1060,7 @@ function WishesSection() {
 /* ============== GIFT / E-ANGPAO ============== */
 const ACCOUNTS = [
   { bank: "BRI", number: "174601003963503", name: "MOHAMMAD NAUFAL AMRU" },
-  { bank: "Mandiri", number: "1710019520108", name: "MOHAMMAD NAUFAL AMRU" },
-  { bank: "SeaBank", number: "901448980693", name: "MOHAMMAD NAUFAL AMRU" },
+  { bank: "BCA", number: "0482681555", name: "ERIKA PUTRI RAHMAHWATI" },
 ];
 
 function GiftSection() {
