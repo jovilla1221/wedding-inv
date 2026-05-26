@@ -986,7 +986,7 @@ function WishesSection() {
         </div>
 
         {/* Centered Form Layout */}
-        <div className="max-w-xl mx-auto mt-8 items-start">
+        <div className="max-w-xl mx-auto mt-8 space-y-8">
           {/* Form Card */}
           <div className="text-left">
             <form
@@ -1048,6 +1048,53 @@ function WishesSection() {
             </form>
           </div>
 
+          {/* Wishes List */}
+          {wishes.length > 0 && (
+            <div 
+              className="relative rounded-lg p-6 sm:p-8 text-left bg-white/95 border border-gold max-h-[400px] overflow-y-auto space-y-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gold/35 [&::-webkit-scrollbar-thumb]:rounded-full"
+              style={{
+                boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
+              }}
+            >
+              {/* Inner double border with ornaments */}
+              <div className="absolute inset-1.5 border border-gold/25 pointer-events-none rounded-[calc(var(--radius)-3px)]">
+                <InnerCornerOrnament className="absolute top-1 left-1 w-4 h-4 text-gold/40" />
+                <InnerCornerOrnament className="absolute top-1 right-1 w-4 h-4 text-gold/40 -scale-x-100" />
+                <InnerCornerOrnament className="absolute bottom-1 left-1 w-4 h-4 text-gold/40 -scale-y-100" />
+                <InnerCornerOrnament className="absolute bottom-1 right-1 w-4 h-4 text-gold/40 -scale-100" />
+              </div>
+              
+              <div className="relative z-10 space-y-4 pr-1">
+                {wishes.map((w) => (
+                  <div
+                    key={w.id}
+                    className="relative rounded-md p-4 bg-navy/5 border border-gold/10 transition-all duration-300 hover:border-gold/30"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1D2D44] to-[#1D2D44]/80 flex items-center justify-center text-gold font-serif text-sm font-bold shadow-sm">
+                        {w.name?.[0]?.toUpperCase() || "?"}
+                      </div>
+                      <div>
+                        <div className="font-serif text-[#1D2D44] font-semibold text-sm">{w.name}</div>
+                        <div className="text-[10px] text-navy/50">
+                          {new Date(w.created_at).toLocaleDateString("id-ID", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit"
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="mt-3 text-xs sm:text-sm text-navy/85 leading-relaxed whitespace-pre-line pl-2.5 border-l-2 border-gold/30">
+                      {w.message}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </FadeInSection>
 
