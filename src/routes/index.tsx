@@ -1016,7 +1016,7 @@ function WishesSection() {
                     placeholder="Nama Anda"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="pl-10 border-gold/20 focus:border-gold/60 bg-white/50 text-navy placeholder:text-navy/40 rounded-md"
+                    className="pl-10 border-gold/20 focus:border-gold/60 bg-white/50 text-[#1A2C42] placeholder:text-[#3A4B5F]/50 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -1028,7 +1028,7 @@ function WishesSection() {
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="pl-10 pt-4.5 border-gold/20 focus:border-gold/60 bg-white/50 text-navy placeholder:text-navy/40 rounded-md"
+                    className="pl-10 pt-4.5 border-gold/20 focus:border-gold/60 bg-white/50 text-[#1A2C42] placeholder:text-[#3A4B5F]/50 rounded-md"
                   />
                 </div>
                 <Button
@@ -1068,15 +1068,15 @@ function WishesSection() {
                 {wishes.map((w) => (
                   <div
                     key={w.id}
-                    className="relative rounded-md p-4 bg-navy/5 border border-gold/10 transition-all duration-300 hover:border-gold/30"
+                    className="relative rounded-md p-4 bg-[#1D2D44]/5 border border-gold/10 transition-all duration-300 hover:border-gold/30"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1D2D44] to-[#1D2D44]/80 flex items-center justify-center text-gold font-serif text-sm font-bold shadow-sm">
                         {w.name?.[0]?.toUpperCase() || "?"}
                       </div>
                       <div>
-                        <div className="font-serif text-[#1D2D44] font-semibold text-sm">{w.name}</div>
-                        <div className="text-[10px] text-navy/50">
+                        <div className="font-serif text-[#1A2C42] font-semibold text-sm">{w.name}</div>
+                        <div className="text-[10px] text-[#3A4B5F] opacity-80">
                           {new Date(w.created_at).toLocaleDateString("id-ID", {
                             day: "numeric",
                             month: "long",
@@ -1087,7 +1087,7 @@ function WishesSection() {
                         </div>
                       </div>
                     </div>
-                    <p className="mt-3 text-xs sm:text-sm text-navy/85 leading-relaxed whitespace-pre-line pl-2.5 border-l-2 border-gold/30">
+                    <p className="mt-3 text-xs sm:text-sm text-[#3A4B5F] leading-relaxed whitespace-pre-line pl-2.5 border-l-2 border-gold/30">
                       {w.message}
                     </p>
                   </div>
