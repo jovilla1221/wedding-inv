@@ -159,9 +159,9 @@ function InvitationPage() {
       {opened && (
         <main className="animate-[fade-in_1.4s_ease-out_both]">
           <HeroSection />
-          
+
           {/* Continuous Background Wrapper for Couple and Event Section */}
-          <div 
+          <div
             className="relative w-full overflow-hidden bg-[#FDFBF7]"
             style={{
               backgroundImage: `url(${luxuryParchment}), url(${subtleBatik})`,
@@ -177,11 +177,11 @@ function InvitationPage() {
 
             {/* Inner gold border spanning both sections */}
             <div className="absolute inset-x-4 sm:inset-x-8 top-4 sm:top-8 bottom-4 sm:bottom-8 border border-[#D4AF37]/30 z-10 pointer-events-none rounded-xl" />
-            
+
             {/* Top gold corners */}
             <img src={goldCorner} alt="" className="absolute top-4 sm:top-8 left-4 sm:left-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none" />
             <img src={goldCorner} alt="" className="absolute top-4 sm:top-8 right-4 sm:right-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-x-[-1]" />
-            
+
             {/* Bottom gold corners */}
             <img src={goldCorner} alt="" className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-y-[-1]" />
             <img src={goldCorner} alt="" className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 w-16 sm:w-24 mix-blend-multiply opacity-80 z-10 pointer-events-none scale-[-1]" />
@@ -202,18 +202,18 @@ function InvitationPage() {
           </div>
 
           <RSVPSection />
-          
+
           {/* Continuous Background Wrapper for Wishes and E-Angpao */}
           <div className="relative w-full overflow-hidden">
             {/* Desktop Background */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block" 
-              style={{ backgroundImage: `url(${bgWishesAngpaoDesktop})` }} 
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block"
+              style={{ backgroundImage: `url(${bgWishesAngpaoDesktop})` }}
             />
             {/* Mobile Background */}
-            <div 
-              className="absolute inset-0 bg-cover bg-top bg-no-repeat md:hidden" 
-              style={{ backgroundImage: `url(${bgWishesAngpaoMobile})` }} 
+            <div
+              className="absolute inset-0 bg-cover bg-top bg-no-repeat md:hidden"
+              style={{ backgroundImage: `url(${bgWishesAngpaoMobile})` }}
             />
             {/* Content */}
             <div className="relative z-10">
@@ -261,9 +261,8 @@ function FadeInSection({
   return (
     <div
       ref={domRef}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-95"
-      } ${className}`}
+      className={`transition-all duration-1000 ease-out transform ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-95"
+        } ${className}`}
     >
       {children}
     </div>
@@ -282,9 +281,8 @@ function Cover({
 }) {
   return (
     <section
-      className={`fixed inset-0 z-[60] flex items-center justify-center overflow-hidden transition-all duration-1000 ${
-        opened ? "opacity-0 pointer-events-none -translate-y-8" : "opacity-100"
-      }`}
+      className={`fixed inset-0 z-[60] flex items-center justify-center overflow-hidden transition-all duration-1000 ${opened ? "opacity-0 pointer-events-none -translate-y-8" : "opacity-100"
+        }`}
     >
       <SceneDecor />
       <div className="cover-content relative z-10 flex w-full max-w-md flex-col items-center text-center">
@@ -445,7 +443,7 @@ function CoupleSection() {
       <FadeInSection className="relative z-20 max-w-5xl mx-auto text-center px-4 w-full">
         <p className="font-amita font-bold text-[#8F7036] text-4xl sm:text-5xl mb-2 drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">The Beloved</p>
         <h2 className="font-serif text-5xl sm:text-6xl text-[#1A2C42] mt-1 tracking-wide">Bride &amp; Groom</h2>
-        
+
         <div className="flex justify-center mt-4 mb-1">
           <img src={cakraJawa} alt="cakra divider" className="w-24 sm:w-32 opacity-90 mix-blend-multiply" />
         </div>
@@ -460,7 +458,7 @@ function CoupleSection() {
             name="Mohammad Naufal Amru"
             parents="Putra dari Bpk Moh. Shohibul Huda (Alm.) & Ibu Yahdi Elfina Yuliyati"
             initials="N"
-            instagram="@naufal.amru"
+            instagram="@naufal.amruu"
           />
           <ProfileCard
             name="Erika Putri Rahmahwati"
@@ -488,7 +486,7 @@ function ProfileCard({
   const isGroom = initials === "N";
   return (
     <div className="relative rounded-[2rem] p-8 sm:p-10 flex flex-col items-center animate-[fade-up_1s_ease-out_both] bg-gradient-to-b from-[#FFFDF9]/95 to-[#F9F5EC]/95 backdrop-blur-md border border-[#D4AF37]/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.1),inset_0_1px_5px_rgba(255,255,255,0.8)] transition-transform duration-500 hover:-translate-y-2 group overflow-hidden">
-      
+
       {/* Subtle corner decors */}
       <img src={cardCornerDecor} alt="" className="absolute top-3 left-3 w-10 mix-blend-multiply opacity-60 pointer-events-none" />
       <img src={cardCornerDecor} alt="" className="absolute top-3 right-3 w-10 mix-blend-multiply opacity-60 pointer-events-none scale-x-[-1]" />
@@ -497,17 +495,17 @@ function ProfileCard({
 
       {/* Inner fine border */}
       <div className="absolute inset-4 border border-[#D4AF37]/30 rounded-3xl pointer-events-none" />
-      
+
       {/* Top gunungan ornament */}
       <img src={cardGunungan} alt="" className="w-12 sm:w-16 h-auto mb-4 opacity-85 mix-blend-multiply drop-shadow-sm" />
 
       {/* Photo Frame (Arch / Oval) */}
       <div className="relative p-1.5 rounded-full border border-[#D4AF37]/60 bg-white/70 shadow-[0_0_15px_rgba(212,175,55,0.15)] mb-4">
-        <OvalFrame 
-          src={isGroom ? groomImg : brideImg} 
-          alt={name} 
-          size="md" 
-          imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""} 
+        <OvalFrame
+          src={isGroom ? groomImg : brideImg}
+          alt={name}
+          size="md"
+          imgClassName={isGroom ? "scale-[1.15] object-[center_20%]" : ""}
         />
       </div>
 
@@ -516,7 +514,7 @@ function ProfileCard({
 
       {/* Typography: Name */}
       <h3 className="font-serif text-2xl sm:text-3xl text-[#111928] tracking-wide text-center leading-snug drop-shadow-sm">{name}</h3>
-      
+
       {/* Instagram Handle */}
       {instagram && (
         <a
@@ -532,7 +530,7 @@ function ProfileCard({
 
       {/* Gold Divider */}
       <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent my-5" />
-      
+
       {/* Typography: Parents */}
       <p className="text-sm sm:text-base text-[#3A4B5F] italic text-center max-w-[260px] leading-relaxed font-light drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
         {parents}
@@ -712,11 +710,10 @@ function RSVPSection() {
                 ].map((o) => (
                   <Label
                     key={o.v}
-                    className={`flex items-center justify-center gap-2 cursor-pointer rounded-md border py-3 transition ${
-                      form.attend === o.v
+                    className={`flex items-center justify-center gap-2 cursor-pointer rounded-md border py-3 transition ${form.attend === o.v
                         ? "border-gold bg-gold/15 text-gold"
                         : "border-ivory/20 text-ivory/70"
-                    }`}
+                      }`}
                   >
                     <RadioGroupItem value={o.v} className="sr-only" />
                     {o.l}
@@ -1050,7 +1047,7 @@ function WishesSection() {
 
           {/* Wishes List */}
           {wishes.length > 0 && (
-            <div 
+            <div
               className="relative rounded-lg p-6 sm:p-8 text-left bg-white/95 border border-gold max-h-[400px] overflow-y-auto space-y-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gold/35 [&::-webkit-scrollbar-thumb]:rounded-full"
               style={{
                 boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
@@ -1063,7 +1060,7 @@ function WishesSection() {
                 <InnerCornerOrnament className="absolute bottom-1 left-1 w-4 h-4 text-gold/40 -scale-y-100" />
                 <InnerCornerOrnament className="absolute bottom-1 right-1 w-4 h-4 text-gold/40 -scale-100" />
               </div>
-              
+
               <div className="relative z-10 space-y-4 pr-1">
                 {wishes.map((w) => (
                   <div
@@ -1194,11 +1191,10 @@ function GiftSection() {
               {/* Copy Button flush at bottom */}
               <button
                 onClick={() => copy(a.number)}
-                className={`absolute bottom-0 left-0 right-0 w-full font-sans font-bold text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 border-t ${
-                  copied === a.number
+                className={`absolute bottom-0 left-0 right-0 w-full font-sans font-bold text-xs uppercase tracking-wider py-4 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 border-t ${copied === a.number
                     ? "bg-[#2D4A3E] text-white border-emerald-500/20"
                     : "bg-[#1D2D44] hover:bg-[#1C2D40] text-white border-gold/20"
-                }`}
+                  }`}
                 style={{
                   borderBottomLeftRadius: "7px",
                   borderBottomRightRadius: "7px",
